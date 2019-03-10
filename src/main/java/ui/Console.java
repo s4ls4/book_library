@@ -132,8 +132,8 @@ public class Console {
             Book book = new Book(serialNumber, name, author, price);
             book.setId(id);
             return book;
-        } catch (IOException var7) {
-            var7.printStackTrace();
+        } catch (IOException e) {
+            System.out.println(e);
             return null;
         }
     }

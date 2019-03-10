@@ -21,7 +21,7 @@ public class BookValidator implements Validator<Book> {
         if(book.getPrice() < 0) {
             throw new ValidatorException("price must be greater than 0");
         }
-        if(book.getPrice() > 1000) {
+        if(book.getPrice() > 9999) {
             throw new ValidatorException("price must be greater than 0");
         }
     }
