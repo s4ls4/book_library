@@ -38,6 +38,9 @@ public class Console {
         return in.nextInt();
     }
 
+    /**
+     * Starts the application
+     */
     public void runConsole() {
         initialize();
         int cmd = menu();
@@ -55,6 +58,9 @@ public class Console {
         }
     }
 
+    /**
+     * Initializes the application with some valid entities
+     */
     private void initialize() {
         Book book1 = new Book("2AB3221", "Harry Potter 1", "J.K. Rowling", 32);
         book1.setId(1L);
@@ -73,21 +79,30 @@ public class Console {
         this.bookService.addBook(book5);
     }
 
+    /**
+     * Prints all books from the repository
+     */
     private void printAllBooks() {
         Set<Book> books = this.bookService.getAllBooks();
         books.forEach( (i)-> System.out.println(i.toString()));
     }
 
+    /**
+     * Adds a book to the repository
+     */
     private void addBooks() {
         Book book = this.readBook();
 
         try {
             this.bookService.addBook(book);
-        } catch (ValidatorException var3) {
-            var3.printStackTrace();
+        } catch (ValidatorException e) {
+            System.out.println(e);
         }
     }
 
+    /**
+     *  Deletes a book from the repository
+     */
     private void deleteBooks() {
         System.out.println("Book id: ");
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
@@ -100,6 +115,10 @@ public class Console {
         }
     }
 
+    /**
+     * Reads a book from the console
+     * @return the book object
+     */
     private Book readBook() {
         System.out.println("Read book {id, serialNumber, name, author, price}");
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));

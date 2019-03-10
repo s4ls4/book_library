@@ -15,19 +15,36 @@ import java.util.stream.StreamSupport;
 public class BookService {
     private Repository<Long, Book> repository;
 
+    /**
+     * constructor for the book service
+     * @param repository - the repository
+     */
     public BookService(Repository<Long, Book> repository) {
         this.repository = repository;
     }
 
+    /**
+     * Function that adds a book
+     * @param book a book object
+     * @throws ValidatorException
+     */
     public void addBook(Book book) throws ValidatorException {
         repository.save(book);
     }
 
-    public Set<Book> getAllBooks() {
+    /**
+     * Function that allows access to all the entities
+     * @return a stream with all the book objects
+     */
+    public Set getAllBooks() {
         Iterable<Book> books = this.repository.findAll();
         return (Set) StreamSupport.stream(books.spliterator(), false).collect(Collectors.toSet());
     }
 
+    /**
+     * Function that deletes a book
+     * @param id the id of the required book
+     */
     public void deleteBook(Long id) {
         repository.delete(id);
     }
