@@ -6,10 +6,6 @@ public class BookValidator implements Validator<Book> {
     @Override
     public void validate(Book book) throws ValidatorException
     {
-        int sn = Integer.parseInt(book.getSerialNumber());
-        if(sn < 0) {
-            throw new ValidatorException("Cannot have a negative serial number");
-        }
         if(book.getSerialNumber() == null) {
             throw new ValidatorException("serial number must not be null");
         }
