@@ -15,4 +15,6 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
     Iterable<T> findAll();
 
     Optional<T> save(T var1) throws ValidatorException;
+
+    Optional<T> delete(ID id);
 }

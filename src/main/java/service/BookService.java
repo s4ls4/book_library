@@ -27,4 +27,8 @@ public class BookService {
         Iterable<Book> books = this.repository.findAll();
         return (Set) StreamSupport.stream(books.spliterator(), false).collect(Collectors.toSet());
     }
+
+    public void deleteBook(Long id) {
+        repository.delete(id);
+    }
 }

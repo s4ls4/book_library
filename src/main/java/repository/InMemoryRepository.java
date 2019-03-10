@@ -46,4 +46,11 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements Reposit
         validator.validate(entity);
         return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
+
+    public Optional<T> delete(ID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id must not be null");
+        }
+        return Optional.ofNullable(entities.remove(id));
+    }
 }

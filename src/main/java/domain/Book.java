@@ -12,11 +12,11 @@ public class Book extends BaseEntity<Long>{
     public Book() {
     }
 
-    public Book(String serialNumber, String name, int group,String a) {
+    public Book(String serialNumber, String name, String author, int price) {
         this.serialNumber = serialNumber;
         this.name = name;
-        this.price = group;
-        this.author=a;
+        this.price = price;
+        this.author = author;
     }
 
     public String getSerialNumber() {
