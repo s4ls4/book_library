@@ -28,6 +28,6 @@ public class main {
 //        Console console = new Console(studentService);
 //        console.runConsole();
 
-        System.out.println("Hello World!");
+        System.out.println("Bye World!");
     }
 }

@@ -75,7 +75,7 @@ public class Console {
             String name = bufferRead.readLine();
             String author = bufferRead.readLine();
             int price = Integer.parseInt(bufferRead.readLine());
-            Book book = new Book(serialNumber, name, price, author);
+            Book book = new Book(serialNumber, name, author, price);
             book.setId(id);
             return book;
         } catch (IOException var7) {
