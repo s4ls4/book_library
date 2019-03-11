@@ -1,8 +1,10 @@
 package ui;
 
 import domain.Book;
+import domain.Client;
 import domain.validators.ValidatorException;
 import service.BookService;
+import service.ClientService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,9 +20,12 @@ import java.util.stream.Stream;
  */
 public class Console {
     private BookService bookService;
+    private ClientService clientService;
 
-    public Console(BookService studentService) {
-        this.bookService = studentService;
+    public Console(BookService bookService, ClientService clientService) {
+
+        this.bookService = bookService;
+        this.clientService = clientService;
     }
 
     public int menu(){
@@ -32,6 +37,9 @@ public class Console {
         System.out.println("1. Print all books");
         System.out.println("2. Add a book");
         System.out.println("3. Delete a book");
+        System.out.println("4. Print all clients");
+        System.out.println("5. Add a client");
+        System.out.println("6. Delete a client");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -53,6 +61,15 @@ public class Console {
             }
             if(cmd == 3) {
                 this.deleteBooks();
+            }
+            if(cmd == 4) {
+                this.printAllClients();
+            }
+            if(cmd == 5) {
+                this.addClients();
+            }
+            if(cmd == 6) {
+                this.deleteClients();
             }
             cmd = menu();
         }
@@ -87,6 +104,12 @@ public class Console {
         books.forEach( (i)-> System.out.println(i.toString()));
     }
 
+
+    private void printAllClients() {
+        Set<Client> client = this.clientService.getAllClients();
+        client.forEach( (i)-> System.out.println(i.toString()));
+    }
+
     /**
      * Adds a book to the repository
      */
@@ -95,6 +118,15 @@ public class Console {
 
         try {
             this.bookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void addClients() {
+        Client client = this.readClient();
+        try{
+            this.clientService.addClient(client);
         } catch (ValidatorException e) {
             System.out.println(e);
         }
@@ -110,8 +142,20 @@ public class Console {
         try {
             Long id = Long.valueOf(bufferRead.readLine());
             this.bookService.deleteBook(id);
-        } catch (IOException var7) {
-            var7.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteClients() {
+        System.out.println("Client id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.clientService.deleteClient(id);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -136,5 +180,26 @@ public class Console {
             System.out.println(e);
             return null;
         }
+    }
+
+    private Client readClient(){
+        System.out.println("Read client {id, serialNumber, name, spent}");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        try{
+            Long idd;
+            idd = Long.valueOf(bufferedReader.readLine());
+            String serialNumber = bufferedReader.readLine();
+            String name = bufferedReader.readLine();
+            int spent = Integer.parseInt(bufferedReader.readLine());
+            Client client = new Client(serialNumber,name,spent);
+            client.setId(idd);
+            return client;
+
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
+
     }
 }

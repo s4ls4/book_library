@@ -39,4 +39,9 @@ public class ClientService {
         Iterable<Client> clients = this.repository.findAll();
         return (Set) StreamSupport.stream(clients.spliterator(), false).collect(Collectors.toSet());
     }
+
+    public void deleteClient(Long id) {
+        repository.delete(id);
+    }
+
 }

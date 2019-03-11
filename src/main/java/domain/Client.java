@@ -9,10 +9,10 @@ public class Client extends BaseEntity<Long>{
     public Client() {
     }
 
-    public Client(String serialNumber, String name, int group) {
+    public Client(String serialNumber, String name, int spent) {
         this.serialNumber = serialNumber;
         this.name = name;
-        this.spent = group;
+        this.spent = spent;
     }
 
     public String getSerialNumber() {
