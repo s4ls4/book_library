@@ -81,13 +81,13 @@ public class Console {
     private void initialize() {
         Book book1 = new Book("2AB3221", "Harry Potter 1", "J.K. Rowling", 32);
         book1.setId(1L);
-        Book book2 = new Book("433qwdE", "Harry Potter 2", "J.K. Rowling", 32);
+        Book book2 = new Book("433qwdE", "Lolita", "Vladimir Nabokov", 27);
         book2.setId(2L);
-        Book book3 = new Book("wdaw221", "Harry Potter 3", "J.K. Rowling", 32);
+        Book book3 = new Book("wdaw221", "Jane Eyre", "Charlotte Brontë", 40);
         book3.setId(3L);
-        Book book4 = new Book("2e21dT1", "Harry Potter 4", "J.K. Rowling", 32);
+        Book book4 = new Book("2e21dT1", "Wuthering Heights", "Emily Brontë", 32);
         book4.setId(4L);
-        Book book5 = new Book("7654wsd", "Harry Potter 5", "J.K. Rowling", 32);
+        Book book5 = new Book("7654wsd", "The Great Gatsby", "F. Scott Fitzgerald", 30);
         book5.setId(5L);
         this.bookService.addBook(book1);
         this.bookService.addBook(book2);
