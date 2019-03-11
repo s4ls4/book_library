@@ -1,7 +1,4 @@
 package domain;
-/*
-author: Narita Marcel
- */
 
 public class Book extends BaseEntity<Long>{
     private String serialNumber;

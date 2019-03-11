@@ -23,7 +23,7 @@ public class ClientService {
         repository.save(client);
     }
 
-    public Set<Client> getAllBooks() {
+    public Set<Client> getAllClients() {
         Iterable<Client> clients = this.repository.findAll();
         return (Set) StreamSupport.stream(clients.spliterator(), false).collect(Collectors.toSet());
     }
