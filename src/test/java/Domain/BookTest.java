@@ -14,5 +14,5 @@ public class BookTest {
     private static final int PRICE = 123;
     private static final int NEW_PRICE = 124;
 
-    private Book book
+    //private Book book
 }
