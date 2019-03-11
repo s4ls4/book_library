@@ -35,7 +35,7 @@ public class ClientService {
      * Function for accessing all the entities
      * @return a stream with all the objects
      */
-    public Set getAllBooks() {
+    public Set<Client> getAllClients() {
         Iterable<Client> clients = this.repository.findAll();
         return (Set) StreamSupport.stream(clients.spliterator(), false).collect(Collectors.toSet());
     }

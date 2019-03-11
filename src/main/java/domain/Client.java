@@ -1,8 +1,5 @@
 package domain;
 
-/*
-author: Narita Marcel
- */
 
 public class Client extends BaseEntity<Long>{
     private String serialNumber;
