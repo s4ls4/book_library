@@ -4,6 +4,7 @@ import domain.validators.BookValidator;
 import domain.validators.ClientValidator;
 import domain.validators.Validator;
 import repository.BookFileRepository;
+import repository.ClientFileRepository;
 import repository.InMemoryRepository;
 import repository.Repository;
 import service.BookService;
@@ -39,7 +40,7 @@ public class main {
      BookService bookService = new BookService(bookRepository);
 
     Validator<Client> clientValidator = new ClientValidator();
-    Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
+    Repository<Long, Client> clientRepository = new ClientFileRepository(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
     ClientService clientService = new ClientService(clientRepository);
 
      Console console = new Console(bookService, clientService);
