@@ -2,9 +2,11 @@ package ui;
 
 import domain.Book;
 import domain.Client;
+import domain.Purchase;
 import domain.validators.ValidatorException;
 import service.BookService;
 import service.ClientService;
+import service.PurchaseService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,14 +23,32 @@ import java.util.stream.Stream;
 public class Console {
     private BookService bookService;
     private ClientService clientService;
+    private PurchaseService purchaseService;
 
-    public Console(BookService bookService, ClientService clientService) {
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
+        this.purchaseService = purchaseService;
     }
 
-    public int menu(){
+    public int menu() {
+        System.out.println("___________________________");
+        System.out.println(" ");
+        System.out.println("  B O O K   L I B R A R Y");
+        System.out.println("___________________________");
+        System.out.println(" ");
+        System.out.println("1. Books operations");
+        System.out.println("2. Clients operations");
+        System.out.println("3. Buy a book");
+        System.out.println("3. Filter");
+        System.out.println("0. Exit");
+
+        Scanner in = new Scanner(System.in);
+        return in.nextInt();
+    }
+
+    public int menuBooks() {
         System.out.println("___________________________");
         System.out.println(" ");
         System.out.println("  B O O K   L I B R A R Y");
@@ -37,41 +57,78 @@ public class Console {
         System.out.println("1. Print all books");
         System.out.println("2. Add a book");
         System.out.println("3. Delete a book");
-        System.out.println("4. Print all clients");
-        System.out.println("5. Add a client");
-        System.out.println("6. Delete a client");
+        System.out.println("4. Update a book");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
         return in.nextInt();
     }
 
+    public int menuClients() {
+        System.out.println("___________________________");
+        System.out.println(" ");
+        System.out.println("  B O O K   L I B R A R Y");
+        System.out.println("___________________________");
+        System.out.println(" ");
+        System.out.println("1. Print all clients");
+        System.out.println("2. Add a client");
+        System.out.println("3. Delete a client");
+        System.out.println("4. Update a client");
+        System.out.println("0. Exit");
+
+
+        Scanner in = new Scanner(System.in);
+        return in.nextInt();
+    }
+
+
     /**
      * Starts the application
      */
     public void runConsole() {
         initialize();
-        int cmd = menu();
-        while(cmd > 0) {
-            if(cmd == 1) {
-                this.printAllBooks();
+        int cmdMain = menu();
+        while (cmdMain > 0) {
+            if (cmdMain == 1) {
+                int cmdBooks = menuBooks();
+                while (cmdBooks > 0) {
+                    if(cmdBooks == 1) {
+                        this.printAllBooks();
+                    }
+                    if(cmdBooks == 2) {
+                        this.addBooks();
+                    }
+                    if(cmdBooks == 3) {
+                        this.deleteBooks();
+                    }
+                    if(cmdBooks == 4) {
+                        this.updateBooks();
+                    }
+                    cmdBooks = menuBooks();
+                }
             }
-            if(cmd == 2) {
-                this.addBooks();
+            if (cmdMain == 2) {
+                int cmdClients = menuClients();
+                while(cmdClients > 0) {
+                    if(cmdClients == 1) {
+                        this.printAllClients();
+                    }
+                    if(cmdClients == 2) {
+                        this.addClients();
+                    }
+                    if(cmdClients == 3) {
+                        this.deleteClients();
+                    }
+                    if(cmdClients == 4) {
+                        this.updateClient();
+                    }
+                    cmdClients = menuClients();
+                }
             }
-            if(cmd == 3) {
-                this.deleteBooks();
+            if (cmdMain == 3) {
+                this.buyBook();
             }
-            if(cmd == 4) {
-                this.printAllClients();
-            }
-            if(cmd == 5) {
-                this.addClients();
-            }
-            if(cmd == 6) {
-                this.deleteClients();
-            }
-            cmd = menu();
+            cmdMain = menu();
         }
     }
 
@@ -101,13 +158,16 @@ public class Console {
      */
     private void printAllBooks() {
         Set<Book> books = this.bookService.getAllBooks();
-        books.forEach( (i)-> System.out.println(i.toString()));
+        books.forEach((i) -> System.out.println(i.toString()));
     }
 
 
+    /**
+     * Prints all clients from the repository
+     */
     private void printAllClients() {
         Set<Client> client = this.clientService.getAllClients();
-        client.forEach( (i)-> System.out.println(i.toString()));
+        client.forEach((i) -> System.out.println(i.toString()));
     }
 
     /**
@@ -123,9 +183,12 @@ public class Console {
         }
     }
 
+    /**
+     * Adds a client to the repository
+     */
     private void addClients() {
         Client client = this.readClient();
-        try{
+        try {
             this.clientService.addClient(client);
         } catch (ValidatorException e) {
             System.out.println(e);
@@ -133,7 +196,7 @@ public class Console {
     }
 
     /**
-     *  Deletes a book from the repository
+     * Deletes a book from the repository
      */
     private void deleteBooks() {
         System.out.println("Book id: ");
@@ -147,6 +210,9 @@ public class Console {
         }
     }
 
+    /**
+     * Deletes a client from the repository
+     */
     private void deleteClients() {
         System.out.println("Client id: ");
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
@@ -156,6 +222,42 @@ public class Console {
             this.clientService.deleteClient(id);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Updates a book from the repository
+     */
+    private void updateBooks() {
+        Book book = this.readBook();
+
+        try {
+            this.bookService.updateBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Update a client from the repository
+     */
+    private void updateClient() {
+        Client client = this.readClient();
+
+        try {
+            this.clientService.updateClient(client);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void buyBook() {
+        Purchase purchase = this.readPurchase();
+
+        try {
+            this.purchaseService.addPurchase(purchase);
+        } catch (ValidatorException e) {
+            System.out.println(e);
         }
     }
 
@@ -182,17 +284,21 @@ public class Console {
         }
     }
 
-    private Client readClient(){
+    /**
+     * Reads a client from the console
+     * @return the client as the object
+     */
+    private Client readClient() {
         System.out.println("Read client {id, serialNumber, name, spent}");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        try{
+        try {
             Long idd;
             idd = Long.valueOf(bufferedReader.readLine());
             String serialNumber = bufferedReader.readLine();
             String name = bufferedReader.readLine();
             int spent = Integer.parseInt(bufferedReader.readLine());
-            Client client = new Client(serialNumber,name,spent);
+            Client client = new Client(serialNumber, name, spent);
             client.setId(idd);
             return client;
 
@@ -200,6 +306,27 @@ public class Console {
             System.out.println(e);
             return null;
         }
+    }
 
+    private Purchase readPurchase() {
+        System.out.println("Read purchase {id, ClientId, BookId}");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id;
+            id = Long.valueOf(bufferedReader.readLine());
+            Long idClient;
+            idClient = Long.valueOf(bufferedReader.readLine());
+            Long idBook;
+            idBook = Long.valueOf(bufferedReader.readLine());
+
+            Purchase p = new Purchase(idClient, idBook);
+            p.setId(id);
+            return p;
+
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 }

@@ -121,7 +121,7 @@ public class Book extends BaseEntity<Long>{
     public String toString() {
         return "Book: " +
                 "serialNumber - " + serialNumber + '\'' +
-                "| name - '" + name + '\'' +
+                "| name - " + name + '\'' +
                 "| author - " + author +
                 "| price - " + price+
                 "  " + super.toString();

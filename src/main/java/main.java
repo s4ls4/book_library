@@ -1,12 +1,15 @@
 import domain.Book;
 import domain.Client;
+import domain.Purchase;
 import domain.validators.BookValidator;
 import domain.validators.ClientValidator;
+import domain.validators.PurchaseValidator;
 import domain.validators.Validator;
 import repository.InMemoryRepository;
 import repository.Repository;
 import service.BookService;
 import service.ClientService;
+import service.PurchaseService;
 import ui.Console;
 
 public class main {
@@ -20,7 +23,13 @@ public class main {
         Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
         ClientService clientService = new ClientService(clientRepository);
 
-        Console console = new Console(bookService, clientService);
+        Validator<Purchase> purchaseValidator = new PurchaseValidator();
+        Repository<Long, Purchase> purchaseRepository = new InMemoryRepository<>(purchaseValidator);
+        PurchaseService purchaseService = new PurchaseService(purchaseRepository);
+
+
+
+        Console console = new Console(bookService, clientService, purchaseService);
         console.runConsole();
 //
 //        //file repo
