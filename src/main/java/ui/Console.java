@@ -50,7 +50,7 @@ public class Console {
      * Starts the application
      */
     public void runConsole() {
-        initialize();
+        //initialize();
         int cmd = menu();
         while(cmd > 0) {
             if(cmd == 1) {

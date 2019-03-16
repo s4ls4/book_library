@@ -66,9 +66,9 @@ public class BookFileRepository extends InMemoryRepository<Long, Book> {
         Path path = Paths.get(fileName);
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            bufferedWriter.newLine();
             bufferedWriter.write(
                     entity.getId() + "," + entity.getSerialNumber() + "," + entity.getName() + "," + entity.getAuthor() + "," + entity.getPrice());
-            bufferedWriter.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

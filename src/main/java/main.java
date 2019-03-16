@@ -16,34 +16,34 @@ import java.io.IOException;
 public class main {
     public static void main(String args[]) {
         //in-memory repo
-        Validator<Book> bookValidator = new BookValidator();
-        Repository<Long, Book> bookRepository = new InMemoryRepository<>(bookValidator);
-        BookService bookService = new BookService(bookRepository);
-
-        Validator<Client> clientValidator = new ClientValidator();
-        Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
-        ClientService clientService = new ClientService(clientRepository);
-
-        Console console = new Console(bookService, clientService);
-        console.runConsole();
-
-//      //file repo
-//       try {
-//           System.out.println(new File(".").getCanonicalPath());
-//       } catch (IOException e) {
-//           System.out.println(e);
-//       }
-//       //in file repo
-//     Validator<Book> studentValidator = new BookValidator();
-//     Repository<Long, Book> bookRepository = new BookFileRepository(studentValidator, "Books.txt");
-//     BookService bookService = new BookService(bookRepository);
+//        Validator<Book> bookValidator = new BookValidator();
+//        Repository<Long, Book> bookRepository = new InMemoryRepository<>(bookValidator);
+//        BookService bookService = new BookService(bookRepository);
 //
-//    Validator<Client> clientValidator = new ClientValidator();
-//    Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
-//    ClientService clientService = new ClientService(clientRepository);
+//        Validator<Client> clientValidator = new ClientValidator();
+//        Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
+//        ClientService clientService = new ClientService(clientRepository);
 //
-//     Console console = new Console(bookService, clientService);
-//     console.runConsole();
+//        Console console = new Console(bookService, clientService);
+//        console.runConsole();
+
+      //file repo
+       try {
+           System.out.println(new File(".").getCanonicalPath());
+       } catch (IOException e) {
+           System.out.println(e);
+       }
+       //in file repo
+     Validator<Book> studentValidator = new BookValidator();
+     Repository<Long, Book> bookRepository = new BookFileRepository(studentValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
+     BookService bookService = new BookService(bookRepository);
+
+    Validator<Client> clientValidator = new ClientValidator();
+    Repository<Long, Client> clientRepository = new InMemoryRepository<>(clientValidator);
+    ClientService clientService = new ClientService(clientRepository);
+
+     Console console = new Console(bookService, clientService);
+     console.runConsole();
 
         System.out.println("Bye World!");
     }
