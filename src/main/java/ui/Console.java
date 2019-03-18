@@ -113,7 +113,7 @@ public class Console {
                         this.updateBooks();
                     }
                     if(cmdBooks == 5) {
-                        this.printAllXML();
+                        this.updateBookXML();
                     }
                     cmdBooks = menuBooks();
                 }
@@ -207,7 +207,7 @@ public class Console {
     /**
      * Adds a book to the repository
      */
-    private void addBooks() throws  Exception{
+    private void addBooks() {
         Book book = this.readBook();
 
         try {
@@ -271,6 +271,18 @@ public class Console {
         }
     }
 
+    private void XMLDeleteBooks() {
+        System.out.println("Book id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.XMLBookService.deleteBook(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Updates a book from the repository
      */
@@ -295,6 +307,28 @@ public class Console {
         } catch (ValidatorException e) {
             System.out.println(e);
         }
+    }
+
+    private void updateBookXML() {
+        System.out.println("Book id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.XMLBookService.deleteBook(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Book book = this.readBook();
+
+        try {
+            this.XMLBookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+
+
     }
 
     private void buyBook() {

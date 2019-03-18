@@ -135,5 +135,36 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
         return null;
     }
 
-    public
+    private static void deleteXML(Long id) throws Exception{
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+
+        NodeList nodes = document.getElementsByTagName("book");
+        for (int i = 0; i < nodes.getLength(); i++){
+            Element element = (Element)nodes.item(i);
+            Long auxID = Long.valueOf(element.getAttribute("id"));
+            if (auxID.longValue() == id){
+                element.getParentNode().removeChild(element);
+            }
+        }
+        Element root = document.getDocumentElement();
+        Transformer transformer =
+                TransformerFactory.newInstance().newTransformer();
+        transformer.transform(new DOMSource(root),
+                new StreamResult(new FileOutputStream(
+                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
+    }
+
+
+    public Optional<Book> delete(Long id){
+        try {
+            deleteXML(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

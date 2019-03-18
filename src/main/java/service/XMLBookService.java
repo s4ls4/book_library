@@ -28,5 +28,9 @@ public class XMLBookService {
         return (Set) StreamSupport.stream(books.spliterator(), false).collect(Collectors.toSet());
     }
 
+    public void deleteBook(Long ID) {
+        xmlRepo.delete(ID);
+    }
+
 
 }
