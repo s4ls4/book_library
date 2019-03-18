@@ -67,7 +67,7 @@ public class main {
         PurchaseService purchaseService = new PurchaseService(purchaseRepository);
 
         Validator<Book> bookValidatorXML = new BookValidator();
-        Repository<Long, Book> XMLRepo = new XMLRepository(bookValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Repository<Long, Book> XMLRepo = new XMLRepositoryBook(bookValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         XMLBookService XMLService = new XMLBookService(XMLRepo);
 
 

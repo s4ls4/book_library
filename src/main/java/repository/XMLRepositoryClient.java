@@ -1,5 +1,6 @@
 package repository;
 
+import domain.Client;
 import domain.validators.ValidatorException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,54 +19,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import domain.Book;
+import domain.Client;
 import domain.validators.Validator;
 
-public class XMLRepository extends InMemoryRepository<Long, Book>{
+public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
 
     private String fileName;
 
-    public XMLRepository(Validator<Book> validator, String fileName) throws Exception {
+    public XMLRepositoryClient(Validator<Client> validator, String fileName) throws Exception {
         super(validator);
         this.fileName = fileName;
 
         loadData();
     }
 
-    private static void saveBook(Book book1) throws Exception {
+    private static void saveClient(Client Client1) throws Exception {
 
         Document document = DocumentBuilderFactory
                 .newInstance()
                 .newDocumentBuilder()
-                .parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+                .parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         Element root = document.getDocumentElement();
 
-        Element bookElement = document.createElement("book");
-        bookElement.setAttribute("id", String.valueOf(book1.getId()));
-        root.appendChild(bookElement);
+        Element ClientElement = document.createElement("Client");
+        ClientElement.setAttribute("id", String.valueOf(Client1.getId()));
+        root.appendChild(ClientElement);
 
-        appendChildWithText(document, bookElement, "serialnumber", book1.getSerialNumber());
-        appendChildWithText(document, bookElement, "name", book1.getName());
-        appendChildWithText(document, bookElement, "author", book1.getAuthor());
-        appendChildWithText(document, bookElement, "price",
-                String.valueOf(book1.getPrice()));
+        appendChildWithText(document, ClientElement, "serialnumber", Client1.getSerialNumber());
+        appendChildWithText(document, ClientElement, "name", Client1.getName());
+        appendChildWithText(document, ClientElement, "spent",
+                String.valueOf(Client1.getSpent()));
 
         Transformer transformer =
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
-                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
+                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML")));
     }
 
 
     @Override
-    public Optional<Book> save(Book entity) throws ValidatorException {
-        Optional<Book> optional = super.save(entity);
+    public Optional<Client> save(Client entity) throws ValidatorException {
+        Optional<Client> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
         try {
-            saveBook(entity);
+            saveClient(entity);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,16 +83,15 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
         parent.appendChild(element);
     }
 
-    private static Book createBook(Element bookNode) {
-        String id = bookNode.getAttribute("id");
+    private static Client createClient(Element ClientNode) {
+        String id = ClientNode.getAttribute("id");
         Long newId = Long.parseLong(id);
-        Book b = new Book();
+        Client b = new Client();
         b.setId(newId);
 
-        b.setSerialNumber(getTextFromTagName(bookNode, "serialnumber"));
-        b.setName(getTextFromTagName(bookNode, "name"));
-        b.setAuthor(getTextFromTagName(bookNode, "author"));
-        b.setPrice(Integer.valueOf(getTextFromTagName(bookNode, "price")));
+        b.setSerialNumber(getTextFromTagName(ClientNode, "serialnumber"));
+        b.setName(getTextFromTagName(ClientNode, "name"));
+        b.setSpent(Integer.valueOf(getTextFromTagName(ClientNode, "spent")));
         return b;
     }
 
@@ -104,29 +103,29 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
     }
 
 
-    public static List<Book> loadData() throws Exception {
-        List<Book> listOfBooks = new ArrayList<>();
+    public static List<Client> loadData() throws Exception {
+        List<Client> listOfClients = new ArrayList<>();
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
 
         DocumentBuilder documentBuilder =
                 documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         Element root = document.getDocumentElement();
 
         NodeList nodes = root.getChildNodes();
         int len = nodes.getLength();
         for (int i = 0; i < len; i++) {
-            Node bookNode = nodes.item(i);
-            if (bookNode instanceof Element) {
-                Book b = createBook((Element) bookNode);
-                listOfBooks.add(b);
+            Node ClientNode = nodes.item(i);
+            if (ClientNode instanceof Element) {
+                Client b = createClient((Element) ClientNode);
+                listOfClients.add(b);
             }
         }
-        return listOfBooks;
+        return listOfClients;
     }
 
-    public Iterable<Book> findAll(){
+    public Iterable<Client> findAll(){
         try {
             return loadData();
         } catch (Exception e) {
@@ -139,9 +138,9 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
 
-        NodeList nodes = document.getElementsByTagName("book");
+        NodeList nodes = document.getElementsByTagName("Client");
         for (int i = 0; i < nodes.getLength(); i++){
             Element element = (Element)nodes.item(i);
             Long auxID = Long.valueOf(element.getAttribute("id"));
@@ -154,11 +153,11 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
-                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
+                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML")));
     }
 
 
-    public Optional<Book> delete(Long id){
+    public Optional<Client> delete(Long id){
         try {
             deleteXML(id);
         } catch (Exception e) {
@@ -166,5 +165,4 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
         }
         return null;
     }
-
 }

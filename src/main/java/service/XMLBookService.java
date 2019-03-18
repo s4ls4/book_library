@@ -1,10 +1,7 @@
 package service;
 import domain.Book;
 
-import domain.validators.Validator;
-import domain.validators.ValidatorException;
 import repository.Repository;
-import repository.XMLRepository;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,7 +20,8 @@ public class XMLBookService {
         xmlRepo.save(book);
     }
 
-    public Set printAllBooks() {
+
+    public Set getAllBooks() {
         Iterable<Book> books = this.xmlRepo.findAll();
         return (Set) StreamSupport.stream(books.spliterator(), false).collect(Collectors.toSet());
     }

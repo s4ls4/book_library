@@ -4,10 +4,7 @@ import domain.Book;
 import domain.Client;
 import domain.Purchase;
 import domain.validators.ValidatorException;
-import service.BookService;
-import service.ClientService;
-import service.XMLBookService;
-import service.PurchaseService;
+import service.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,14 +25,17 @@ public class Console {
     private ClientService clientService;
     private PurchaseService purchaseService;
     private XMLBookService XMLBookService;
+    private XMLClientService XMLClientService;
 
 
-    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLBookService) {
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLBookService, XMLClientService XMLClientService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
-        this.XMLBookService = XMLBookService; }
+        this.XMLBookService = XMLBookService;
+        this.XMLClientService = XMLClientService;
+    }
 
     public int menu() {
         System.out.println("___________________________");
@@ -199,8 +199,13 @@ public class Console {
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
-    private void printAllXML() {
-        Set<Book> client = this.XMLBookService.printAllBooks();
+    private void printAllBooksXML() {
+        Set<Book> book = this.XMLBookService.printAllBooks();
+        book.forEach((i) -> System.out.println(i.toString()));
+    }
+
+    private void printAllClientsXML() {
+        Set<Client> client = this.XMLClientService.printAllClients();
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
@@ -236,6 +241,17 @@ public class Console {
 
         try {
             this.XMLBookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
+
+
+    private void XMLAddClients() {
+        Client client = this.readClient();
+
+        try {
+            this.XMLClientService.addClient(client);
         } catch (ValidatorException e) {
             System.out.println(e);
         }
@@ -283,6 +299,18 @@ public class Console {
         }
     }
 
+    private void XMLDeleteClients() {
+        System.out.println("Client id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.XMLClientService.deleteClient(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Updates a book from the repository
      */
@@ -324,6 +352,28 @@ public class Console {
 
         try {
             this.XMLBookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+
+
+    }
+
+    private void updateClientXML() {
+        System.out.println("Client id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.XMLClientService.deleteClient(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Client client = this.readClient();
+
+        try {
+            this.XMLClientService.addClient(client);
         } catch (ValidatorException e) {
             System.out.println(e);
         }
