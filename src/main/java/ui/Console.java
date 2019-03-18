@@ -35,7 +35,21 @@ public class Console {
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
-        this.XMLBookService = XMLBookService; }
+        this.XMLBookService = XMLBookService;
+    }
+
+    public int menuFormat() {
+        System.out.println("___________________________");
+        System.out.println(" ");
+        System.out.println("  B O O K   L I B R A R Y");
+        System.out.println("___________________________");
+        System.out.println("4. File");
+        System.out.println("5. XML");
+        System.out.println("0. Exit");
+
+        Scanner in = new Scanner(System.in);
+        return in.nextInt();
+    }
 
     public int menu() {
         System.out.println("___________________________");
@@ -92,60 +106,114 @@ public class Console {
      * Starts the application
      */
     public void runConsole() throws Exception {
-        //initialize();
-        // initializeC();
 
-        int cmdMain = menu();
-        while (cmdMain > 0) {
-            if (cmdMain == 1) {
-                int cmdBooks = menuBooks();
-                while (cmdBooks > 0) {
-                    if(cmdBooks == 1) {
-                        this.printAllBooks();
+        int format = menuFormat();
+        while (format > 0) {
+            if(format == 1) {
+                int cmdMain = menu();
+                while (cmdMain > 0) {
+                    if (cmdMain == 1) {
+                        int cmdBooks = menuBooks();
+                        while (cmdBooks > 0) {
+                            if(cmdBooks == 1) {
+                                this.printAllBooks();
+                            }
+                            if(cmdBooks == 2) {
+                                this.addBooks();
+                            }
+                            if(cmdBooks == 3) {
+                                this.deleteBooks();
+                            }
+                            if(cmdBooks == 4) {
+                                this.updateBooks();
+                            }
+                            cmdBooks = menuBooks();
+                        }
                     }
-                    if(cmdBooks == 2) {
-                        this.addBooks();
+                    if (cmdMain == 2) {
+                        int cmdClients = menuClients();
+                        while(cmdClients > 0) {
+                            if(cmdClients == 1) {
+                                this.printAllClients();
+                            }
+                            if(cmdClients == 2) {
+                                this.addClients();
+                            }
+                            if(cmdClients == 3) {
+                                this.deleteClients();
+                            }
+                            if(cmdClients == 4) {
+                                this.updateClient();
+                            }
+                            cmdClients = menuClients();
+                        }
                     }
-                    if(cmdBooks == 3) {
-                        this.deleteBooks();
+                    if (cmdMain == 3) {
+                        this.buyBook();
                     }
-                    if(cmdBooks == 4) {
-                        this.updateBooks();
+                    if (cmdMain == 4) {
+                        this.filterClients();
                     }
-                    if(cmdBooks == 5) {
-                        this.updateBookXML();
+                    if(cmdMain == 5) {
+                        this.sortClients();
                     }
-                    cmdBooks = menuBooks();
+                    cmdMain = menu();
                 }
             }
-            if (cmdMain == 2) {
-                int cmdClients = menuClients();
-                while(cmdClients > 0) {
-                    if(cmdClients == 1) {
-                        this.printAllClients();
+            if (format == 2) {
+                int cmdMain = menu();
+                while (cmdMain > 0) {
+                    if (cmdMain == 1) {
+                        int cmdBooks = menuBooks();
+                        while (cmdBooks > 0) {
+                            if(cmdBooks == 1) {
+                                this.printAllBooksXML();
+                            }
+                            if(cmdBooks == 2) {
+                                this.XMLAddBooks();
+                            }
+                            if(cmdBooks == 3) {
+                                this.XMLDeleteBooks();
+                            }
+                            if(cmdBooks == 4) {
+                                this.updateBookXML();
+                            }
+                            if(cmdBooks == 5) {
+                                this.updateBookXML();
+                            }
+                            cmdBooks = menuBooks();
+                        }
                     }
-                    if(cmdClients == 2) {
-                        this.addClients();
+                    if (cmdMain == 2) {
+                        int cmdClients = menuClients();
+                        while(cmdClients > 0) {
+                            if(cmdClients == 1) {
+                                this.printAllClientsXML();
+                            }
+                            if(cmdClients == 2) {
+                                this.XMLAddClients();
+                            }
+                            if(cmdClients == 3) {
+                                this.XMLDeleteClients();
+                            }
+                            if(cmdClients == 4) {
+                                this.XMLUpdateClient();
+                            }
+                            cmdClients = menuClients();
+                        }
                     }
-                    if(cmdClients == 3) {
-                        this.deleteClients();
+                    if (cmdMain == 3) {
+                        this.buyBookXML();
                     }
-                    if(cmdClients == 4) {
-                        this.updateClient();
+                    if (cmdMain == 4) {
+                        this.filterClientsXML();
                     }
-                    cmdClients = menuClients();
+                    if(cmdMain == 5) {
+                        this.sortClientsXML();
+                    }
+                    cmdMain = menu();
                 }
             }
-            if (cmdMain == 3) {
-                this.buyBook();
-            }
-            if (cmdMain == 4) {
-                this.filterClients();
-            }
-            if(cmdMain == 5) {
-                this.sortClients();
-            }
-            cmdMain = menu();
         }
     }
 
@@ -200,7 +268,7 @@ public class Console {
     }
 
     private void printAllXML() {
-        Set<Book> client = this.XMLBookService.printAllBooks();
+        Set<Book> client = this.XMLBookService.getAllBooks();
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
@@ -327,8 +395,6 @@ public class Console {
         } catch (ValidatorException e) {
             System.out.println(e);
         }
-
-
     }
 
     private void buyBook() {
@@ -337,6 +403,10 @@ public class Console {
         Set<Book> books = this.bookService.getAllBooks();
 
 
+        buyOperation(purchase, clients, books);
+    }
+
+    private void buyOperation(Purchase purchase, Set<Client> clients, Set<Book> books) {
         try {
             final int[] price = new int[1];
             this.purchaseService.addPurchase(purchase);
@@ -357,14 +427,36 @@ public class Console {
         }
     }
 
+    private void buyBookXML() {
+        Purchase purchase = this.readPurchase();
+        Set<Client> clients = this.XMLClientService.getAllClients();
+        Set<Book> books = this.XMLBookService.getAllBooks();
+
+
+        buyOperation(purchase, clients, books);
+    }
+
     private void filterClients() {
         Set<Client> clients = this.clientService.getAllClients();
         Stream<Client> inactive = clients.stream().filter(c -> c.getSpent() == 0);
         inactive.forEach((i) -> System.out.println(i.toString()));
     }
 
+    private void filterClientsXML() {
+        Set<Client> clients = this.XMLClientService.getAllClients();
+        Stream<Client> inactive = clients.stream().filter(c -> c.getSpent() == 0);
+        inactive.forEach((i) -> System.out.println(i.toString()));
+    }
+
     private void sortClients() {
         Set<Client> clients = this.clientService.getAllClients();
+
+        clients.stream().sorted(Comparator.comparing(Client::getSpent))
+                .forEach(c -> System.out.println(c.toString()));
+    }
+
+    private void sortClientsXML() {
+        Set<Client> clients = this.XMLClientService.getAllClients();
 
         clients.stream().sorted(Comparator.comparing(Client::getSpent))
                 .forEach(c -> System.out.println(c.toString()));

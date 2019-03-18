@@ -23,7 +23,7 @@ public class XMLBookService {
         xmlRepo.save(book);
     }
 
-    public Set printAllBooks() {
+    public Set getAllBooks() {
         Iterable<Book> books = this.xmlRepo.findAll();
         return (Set) StreamSupport.stream(books.spliterator(), false).collect(Collectors.toSet());
     }
