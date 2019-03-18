@@ -71,6 +71,10 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
         }
         return Optional.empty();
     }
+
+
+
+
     private static void appendChildWithText(Document document,
                                             Node parent, String tagName, String textContent) {
 
@@ -100,7 +104,7 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
     }
 
 
-    private static List<Book> loadData() throws Exception {
+    public static List<Book> loadData() throws Exception {
         List<Book> listOfBooks = new ArrayList<>();
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
@@ -121,4 +125,15 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
         }
         return listOfBooks;
     }
+
+    public Iterable<Book> findAll(){
+        try {
+            return loadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public
 }

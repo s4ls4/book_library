@@ -112,9 +112,9 @@ public class Console {
                     if(cmdBooks == 4) {
                         this.updateBooks();
                     }
-//                    if(cmdBooks == 5) {
-//                        this.XMLAddBooks();
-//                    }
+                    if(cmdBooks == 5) {
+                        this.printAllXML();
+                    }
                     cmdBooks = menuBooks();
                 }
             }
@@ -199,6 +199,11 @@ public class Console {
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
+    private void printAllXML() {
+        Set<Book> client = this.XMLBookService.printAllBooks();
+        client.forEach((i) -> System.out.println(i.toString()));
+    }
+
     /**
      * Adds a book to the repository
      */
@@ -225,15 +230,16 @@ public class Console {
         }
     }
 
-//    private void XMLAddBooks() throws Exception {
-//        Book book = this.readBook();
-//
-//        try {
-//            this.XMLBookService.addBook(book);
-//        } catch (ValidatorException e) {
-//            System.out.println(e);
-//        }
-//    }
+
+    private void XMLAddBooks() {
+        Book book = this.readBook();
+
+        try {
+            this.XMLBookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * Deletes a book from the repository
