@@ -3,17 +3,18 @@ import domain.Book;
 
 import domain.validators.Validator;
 import domain.validators.ValidatorException;
+import repository.Repository;
 import repository.XMLRepository;
 
 public class XMLBookService {
-    private XMLRepository xmlRepo;
+    private Repository<Long, Book> xmlRepo;
 
 
-    public XMLBookService(XMLRepository xmlRepo) {
+    public XMLBookService(Repository<Long, Book> xmlRepo) {
         this.xmlRepo = xmlRepo;
     }
 
-    public void addMovie(Book book) throws ValidatorException {
+    public void addBook(Book book) throws Exception {
 
         xmlRepo.save(book);
     }

@@ -26,15 +26,16 @@ import java.util.stream.Stream;
 public class Console {
     private BookService bookService;
     private ClientService clientService;
-    private XMLBookService XMLB;
     private PurchaseService purchaseService;
+    private XMLBookService XMLBookService;
 
-    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLB) {
+
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLBookService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
-        this.XMLB = XMLB; }
+        this.XMLBookService = XMLBookService; }
 
     public int menu() {
         System.out.println("___________________________");
@@ -90,10 +91,9 @@ public class Console {
     /**
      * Starts the application
      */
-    public void runConsole() {
-
-        initialize();
-        initializeC();
+    public void runConsole() throws Exception {
+        //initialize();
+        // initializeC();
 
         int cmdMain = menu();
         while (cmdMain > 0) {
@@ -112,6 +112,9 @@ public class Console {
                     if(cmdBooks == 4) {
                         this.updateBooks();
                     }
+//                    if(cmdBooks == 5) {
+//                        this.XMLAddBooks();
+//                    }
                     cmdBooks = menuBooks();
                 }
             }
@@ -199,11 +202,12 @@ public class Console {
     /**
      * Adds a book to the repository
      */
-    private void addBooks() {
+    private void addBooks() throws  Exception{
         Book book = this.readBook();
 
         try {
             this.bookService.addBook(book);
+            this.XMLBookService.addBook(book);
         } catch (ValidatorException e) {
             System.out.println(e);
         }
@@ -220,6 +224,16 @@ public class Console {
             System.out.println(e);
         }
     }
+
+//    private void XMLAddBooks() throws Exception {
+//        Book book = this.readBook();
+//
+//        try {
+//            this.XMLBookService.addBook(book);
+//        } catch (ValidatorException e) {
+//            System.out.println(e);
+//        }
+//    }
 
     /**
      * Deletes a book from the repository
