@@ -62,9 +62,9 @@ public class Client extends BaseEntity<Long>{
     @Override
     public String toString() {
         return "Client: " +
-                "serialNumber - " + serialNumber + '\'' +
-                "| name - " + name + '\'' +
-                "| spent - " + spent+
-                super.toString();
+                "serialNumber - " + serialNumber +
+                " | name - " + name  +
+                " | spent - " + spent +
+                " " +super.toString();
     }
 }

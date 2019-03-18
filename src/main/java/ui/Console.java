@@ -12,9 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -41,7 +43,8 @@ public class Console {
         System.out.println("1. Books operations");
         System.out.println("2. Clients operations");
         System.out.println("3. Buy a book");
-        System.out.println("3. Filter");
+        System.out.println("4. Filter inactive");
+        System.out.println("5. Sort clients");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -87,6 +90,7 @@ public class Console {
      */
     public void runConsole() {
         initialize();
+        initializeC();
         int cmdMain = menu();
         while (cmdMain > 0) {
             if (cmdMain == 1) {
@@ -128,6 +132,12 @@ public class Console {
             if (cmdMain == 3) {
                 this.buyBook();
             }
+            if (cmdMain == 4) {
+                this.filterClients();
+            }
+            if(cmdMain == 5) {
+                this.sortClients();
+            }
             cmdMain = menu();
         }
     }
@@ -138,19 +148,31 @@ public class Console {
     private void initialize() {
         Book book1 = new Book("2AB3221", "Harry Potter 1", "J.K. Rowling", 32);
         book1.setId(1L);
+        this.bookService.addBook(book1);
         Book book2 = new Book("433qwdE", "Lolita", "Vladimir Nabokov", 27);
         book2.setId(2L);
+        this.bookService.addBook(book2);
         Book book3 = new Book("wdaw221", "Jane Eyre", "Charlotte Brontë", 40);
         book3.setId(3L);
+        this.bookService.addBook(book3);
         Book book4 = new Book("2e21dT1", "Wuthering Heights", "Emily Brontë", 32);
         book4.setId(4L);
+        this.bookService.addBook(book4);
         Book book5 = new Book("7654wsd", "The Great Gatsby", "F. Scott Fitzgerald", 30);
         book5.setId(5L);
-        this.bookService.addBook(book1);
-        this.bookService.addBook(book2);
-        this.bookService.addBook(book3);
-        this.bookService.addBook(book4);
         this.bookService.addBook(book5);
+    }
+
+    private void initializeC() {
+        Client client1 = new Client("1", "Harry", 0);
+        client1.setId(1L);
+        this.clientService.addClient(client1);
+        Client client2 = new Client("2", "Harry", 0);
+        client2.setId(2L);
+        this.clientService.addClient(client2);
+        Client client3 = new Client("3", "Harry", 0);
+        client3.setId(3L);
+        this.clientService.addClient(client3);
     }
 
     /**
@@ -253,12 +275,41 @@ public class Console {
 
     private void buyBook() {
         Purchase purchase = this.readPurchase();
+        Set<Client> clients = this.clientService.getAllClients();
+        Set<Book> books = this.bookService.getAllBooks();
+
 
         try {
+            final int[] price = new int[1];
             this.purchaseService.addPurchase(purchase);
+            books.forEach(i -> {
+                if(i.getId().equals(purchase.getIdBook())) {
+                    price[0] = i.getPrice();
+                }
+            });
+
+            clients.forEach((i) -> {
+                if(i.getId().equals(purchase.getIdClient())) {
+                    i.setSpent(i.getSpent() + price[0]);
+                }
+            });
+
         } catch (ValidatorException e) {
             System.out.println(e);
         }
+    }
+
+    private void filterClients() {
+        Set<Client> clients = this.clientService.getAllClients();
+        Stream<Client> inactive = clients.stream().filter(c -> c.getSpent() == 0);
+        inactive.forEach((i) -> System.out.println(i.toString()));
+    }
+
+    private void sortClients() {
+        Set<Client> clients = this.clientService.getAllClients();
+
+        clients.stream().sorted(Comparator.comparing(Client::getSpent))
+                .forEach(c -> System.out.println(c.toString()));
     }
 
     /**

@@ -120,10 +120,10 @@ public class Book extends BaseEntity<Long>{
     @Override
     public String toString() {
         return "Book: " +
-                "serialNumber - " + serialNumber + '\'' +
-                "| name - " + name + '\'' +
-                "| author - " + author +
-                "| price - " + price+
+                "serialNumber - " + serialNumber  +
+                " | name - " + name  +
+                " | author - " + author +
+                " | price - " + price+
                 "  " + super.toString();
     }
 }
