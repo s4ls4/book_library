@@ -6,10 +6,7 @@ import domain.validators.ClientValidator;
 import domain.validators.PurchaseValidator;
 import domain.validators.Validator;
 import repository.*;
-import service.BookService;
-import service.ClientService;
-import service.PurchaseService;
-import service.XMLBookService;
+import service.*;
 import ui.Console;
 
 import java.io.File;
@@ -67,11 +64,15 @@ public class main {
         PurchaseService purchaseService = new PurchaseService(purchaseRepository);
 
         Validator<Book> bookValidatorXML = new BookValidator();
-        Repository<Long, Book> XMLRepo = new XMLRepositoryBook(bookValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
-        XMLBookService XMLService = new XMLBookService(XMLRepo);
+        Repository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        XMLBookService XMLBookService = new XMLBookService(XMLBookRepo);
+
+        Validator<Client> clientValidatorXML = new ClientValidator();
+        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
 
-        Console console = new Console(bookService, clientService, purchaseService,XMLService);
+        Console console = new Console(bookService, clientService, purchaseService,XMLBookService, XMLClientService);
         console.runConsole();
         System.out.println("Bye World!");
     }
