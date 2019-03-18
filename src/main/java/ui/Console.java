@@ -5,6 +5,7 @@ import domain.Client;
 import domain.validators.ValidatorException;
 import service.BookService;
 import service.ClientService;
+import service.XMLBookService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,11 +22,13 @@ import java.util.stream.Stream;
 public class Console {
     private BookService bookService;
     private ClientService clientService;
+    private XMLBookService XMLB;
 
-    public Console(BookService bookService, ClientService clientService) {
+    public Console(BookService bookService, ClientService clientService, XMLBookService XMLB) {
 
         this.bookService = bookService;
         this.clientService = clientService;
+        this.XMLB = XMLB;
     }
 
     public int menu(){

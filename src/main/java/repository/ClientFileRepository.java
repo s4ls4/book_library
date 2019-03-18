@@ -1,7 +1,5 @@
 package repository;
 
-
-import domain.Book;
 import domain.Client;
 import domain.validators.Validator;
 import domain.validators.ValidatorException;
