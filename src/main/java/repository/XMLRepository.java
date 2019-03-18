@@ -1,5 +1,6 @@
 package repository;
 
+import domain.validators.ValidatorException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,6 +16,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import domain.Book;
 import domain.validators.Validator;
 
@@ -54,6 +57,20 @@ public class XMLRepository extends InMemoryRepository<Long, Book>{
                         "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
     }
 
+
+    @Override
+    public Optional<Book> save(Book entity) throws ValidatorException {
+        Optional<Book> optional = super.save(entity);
+        if (optional.isPresent()) {
+            return optional;
+        }
+        try {
+            saveBook(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
     private static void appendChildWithText(Document document,
                                             Node parent, String tagName, String textContent) {
 

@@ -24,15 +24,16 @@ import java.util.stream.Stream;
 public class Console {
     private BookService bookService;
     private ClientService clientService;
-    private XMLBookService XMLB;
     private PurchaseService purchaseService;
+    private XMLBookService XMLBookService;
 
-    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLB) {
+
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLBookService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
-        this.XMLB = XMLB; }
+        this.XMLBookService = XMLBookService; }
 
     public int menu() {
         System.out.println("___________________________");
@@ -43,7 +44,7 @@ public class Console {
         System.out.println("1. Books operations");
         System.out.println("2. Clients operations");
         System.out.println("3. Buy a book");
-        System.out.println("3. Filter");
+        System.out.println("4. Filter");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -60,6 +61,7 @@ public class Console {
         System.out.println("2. Add a book");
         System.out.println("3. Delete a book");
         System.out.println("4. Update a book");
+        System.out.println("5. XML Add Book");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -87,7 +89,7 @@ public class Console {
     /**
      * Starts the application
      */
-    public void runConsole() {
+    public void runConsole() throws Exception {
         //initialize();
         int cmdMain = menu();
         while (cmdMain > 0) {
@@ -105,6 +107,9 @@ public class Console {
                     }
                     if(cmdBooks == 4) {
                         this.updateBooks();
+                    }
+                    if(cmdBooks == 5) {
+                        this.XMLAddBooks();
                     }
                     cmdBooks = menuBooks();
                 }
@@ -197,6 +202,16 @@ public class Console {
         }
     }
 
+    private void XMLAddBooks() throws Exception {
+        Book book = this.readBook();
+
+        try {
+            this.XMLBookService.addBook(book);
+        } catch (ValidatorException e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * Deletes a book from the repository
      */
@@ -253,7 +268,7 @@ public class Console {
         }
     }
 
-    private void buyBook() {
+    private void buyBook() throws Exception {
         Purchase purchase = this.readPurchase();
 
         try {
