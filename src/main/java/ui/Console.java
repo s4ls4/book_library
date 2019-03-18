@@ -109,7 +109,7 @@ public class Console {
                         this.updateBooks();
                     }
                     if(cmdBooks == 5) {
-                        this.XMLAddBooks();
+                        this.printAllXML();
                     }
                     cmdBooks = menuBooks();
                 }
@@ -177,6 +177,11 @@ public class Console {
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
+    private void printAllXML() {
+        Set<Book> client = this.XMLBookService.printAllBooks();
+        client.forEach((i) -> System.out.println(i.toString()));
+    }
+
     /**
      * Adds a book to the repository
      */
@@ -202,7 +207,7 @@ public class Console {
         }
     }
 
-    private void XMLAddBooks() throws Exception {
+    private void XMLAddBooks() {
         Book book = this.readBook();
 
         try {

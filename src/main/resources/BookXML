@@ -11,4 +11,10 @@
     <author>wadawdw</author>
     <price>50</price>
 </book>
-<book id="40"><serialnumber>fefse</serialnumber><name>fsefesf</name><author>fsefesfs</author><price>40</price></book><book id="30"><serialnumber>dfafwa</serialnumber><name>fafwaf</name><author>wwfawfwa</author><price>60</price></book></BookXML>
+<book id="40">
+    <serialnumber>fefse</serialnumber><name>fsefesf</name><author>fsefesfs</author><price>40</price>
+</book>
+    <book id="30">
+        <serialnumber>dfafwa</serialnumber><name>fafwaf</name><author>wwfawfwa</author><price>60</price>
+    </book>
+</BookXML>

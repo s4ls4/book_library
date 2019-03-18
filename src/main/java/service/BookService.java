@@ -28,9 +28,11 @@ public class BookService {
      * @param book a book object
      * @throws ValidatorException
      */
+
     public void addBook(Book book) throws ValidatorException {
         repository.save(book);
     }
+
 
     /**
      * Function that allows access to all the entities
