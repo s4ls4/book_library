@@ -6,6 +6,7 @@ import domain.Purchase;
 import domain.validators.ValidatorException;
 import service.BookService;
 import service.ClientService;
+import service.XMLBookService;
 import service.PurchaseService;
 
 import java.io.BufferedReader;
@@ -25,14 +26,15 @@ import java.util.stream.Stream;
 public class Console {
     private BookService bookService;
     private ClientService clientService;
+    private XMLBookService XMLB;
     private PurchaseService purchaseService;
 
-    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService) {
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLB) {
 
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
-    }
+        this.XMLB = XMLB; }
 
     public int menu() {
         System.out.println("___________________________");
@@ -89,8 +91,10 @@ public class Console {
      * Starts the application
      */
     public void runConsole() {
+
         initialize();
         initializeC();
+
         int cmdMain = menu();
         while (cmdMain > 0) {
             if (cmdMain == 1) {

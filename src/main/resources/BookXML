@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BookXML>
+    <book id="1">
+        <serialnumber>Harry Potter</serialnumber>
+        <name>dasfas</name>
+        <author>J K. Rowling</author>
+        <price>30</price>
+    </book>
+</BookXML>
