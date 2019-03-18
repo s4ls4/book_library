@@ -1,3 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><ClientXML>
+<?xml version="1.0" encoding="UTF-8"?>
+<ClientXML>
 
+    <Client id="2">
+        <serialnumber>76786</serialnumber>
+        <name>iON tyh</name>
+        <spent>0</spent>
+    </Client>
+    <Client id="3">
+        <serialnumber>WEDW</serialnumber>
+        <name>cucu</name>
+        <spent>0</spent>
+    </Client>
+    <Client id="4">
+        <serialnumber>kahda</serialnumber>
+        <name>umbra</name>
+        <spent>21</spent>
+    </Client>
+    <Client id="5">
+        <serialnumber>ew</serialnumber>
+        <name>yuck</name>
+        <spent>0</spent>
+    </Client>
 </ClientXML>

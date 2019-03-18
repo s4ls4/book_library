@@ -1,9 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><BookXML>
-    
-<book id="30">
-    <serialnumber>wdadwad</serialnumber>
-    <name>wadawdaw</name>
-    <author>wadawdw</author>
-    <price>50</price>
-</book>
-<book id="40"><serialnumber>fesfes</serialnumber><name>fsefse</name><author>seffes</author><price>30</price></book></BookXML>
+<?xml version="1.0" encoding="UTF-8"?>
+<BookXML>
+
+    <book id="30">
+        <serialnumber>wdadwad</serialnumber>
+        <name>wadawdaw</name>
+        <author>wadawdw</author>
+        <price>50</price>
+    </book>
+    <book id="40">
+        <serialnumber>fesfes</serialnumber>
+        <name>fsefse</name>
+        <author>seffes</author>
+        <price>30</price>
+    </book>
+    <book id="5">
+        <serialnumber>awdwa</serialnumber>
+        <name>dawda</name>
+        <author>safaff</author>
+        <price>67</price>
+    </book>
+</BookXML>

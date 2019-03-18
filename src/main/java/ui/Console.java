@@ -37,20 +37,20 @@ public class Console {
         this.XMLClientService = XMLClientService;
     }
 
-    public int menuFormat() {
+    private int menuFormat() {
         System.out.println("___________________________");
         System.out.println(" ");
         System.out.println("  B O O K   L I B R A R Y");
         System.out.println("___________________________");
-        System.out.println("4. File");
-        System.out.println("5. XML");
+        System.out.println("1. File");
+        System.out.println("2. XML");
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
         return in.nextInt();
     }
 
-    public int menu() {
+    private int menu() {
         System.out.println("___________________________");
         System.out.println(" ");
         System.out.println("  B O O K   L I B R A R Y");
@@ -67,11 +67,11 @@ public class Console {
         return in.nextInt();
     }
 
-    public int menuBooks() {
-        System.out.println("___________________________");
+    private int menuBooks() {
+        System.out.println("_________________________________________");
         System.out.println(" ");
-        System.out.println("  B O O K   L I B R A R Y");
-        System.out.println("___________________________");
+        System.out.println("  B O O K   L I B R A R Y / B O O K S");
+        System.out.println("_________________________________________");
         System.out.println(" ");
         System.out.println("1. Print all books");
         System.out.println("2. Add a book");
@@ -83,11 +83,11 @@ public class Console {
         return in.nextInt();
     }
 
-    public int menuClients() {
-        System.out.println("___________________________");
+    private int menuClients() {
+        System.out.println("____________________________________________");
         System.out.println(" ");
-        System.out.println("  B O O K   L I B R A R Y");
-        System.out.println("___________________________");
+        System.out.println("  B O O K   L I B R A R Y / C L I E N T S");
+        System.out.println("____________________________________________");
         System.out.println(" ");
         System.out.println("1. Print all clients");
         System.out.println("2. Add a client");
@@ -108,22 +108,22 @@ public class Console {
 
         int format = menuFormat();
         while (format > 0) {
-            if(format == 1) {
+            if (format == 1) {
                 int cmdMain = menu();
                 while (cmdMain > 0) {
                     if (cmdMain == 1) {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
-                            if(cmdBooks == 1) {
+                            if (cmdBooks == 1) {
                                 this.printAllBooks();
                             }
-                            if(cmdBooks == 2) {
+                            if (cmdBooks == 2) {
                                 this.addBooks();
                             }
-                            if(cmdBooks == 3) {
+                            if (cmdBooks == 3) {
                                 this.deleteBooks();
                             }
-                            if(cmdBooks == 4) {
+                            if (cmdBooks == 4) {
                                 this.updateBooks();
                             }
                             cmdBooks = menuBooks();
@@ -131,17 +131,17 @@ public class Console {
                     }
                     if (cmdMain == 2) {
                         int cmdClients = menuClients();
-                        while(cmdClients > 0) {
-                            if(cmdClients == 1) {
+                        while (cmdClients > 0) {
+                            if (cmdClients == 1) {
                                 this.printAllClients();
                             }
-                            if(cmdClients == 2) {
+                            if (cmdClients == 2) {
                                 this.addClients();
                             }
-                            if(cmdClients == 3) {
+                            if (cmdClients == 3) {
                                 this.deleteClients();
                             }
-                            if(cmdClients == 4) {
+                            if (cmdClients == 4) {
                                 this.updateClient();
                             }
                             cmdClients = menuClients();
@@ -153,7 +153,7 @@ public class Console {
                     if (cmdMain == 4) {
                         this.filterClients();
                     }
-                    if(cmdMain == 5) {
+                    if (cmdMain == 5) {
                         this.sortClients();
                     }
                     cmdMain = menu();
@@ -165,19 +165,19 @@ public class Console {
                     if (cmdMain == 1) {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
-                            if(cmdBooks == 1) {
+                            if (cmdBooks == 1) {
                                 this.printAllBooksXML();
                             }
-                            if(cmdBooks == 2) {
+                            if (cmdBooks == 2) {
                                 this.XMLAddBooks();
                             }
-                            if(cmdBooks == 3) {
+                            if (cmdBooks == 3) {
                                 this.XMLDeleteBooks();
                             }
-                            if(cmdBooks == 4) {
+                            if (cmdBooks == 4) {
                                 this.updateBookXML();
                             }
-                            if(cmdBooks == 5) {
+                            if (cmdBooks == 5) {
                                 this.updateBookXML();
                             }
                             cmdBooks = menuBooks();
@@ -185,17 +185,17 @@ public class Console {
                     }
                     if (cmdMain == 2) {
                         int cmdClients = menuClients();
-                        while(cmdClients > 0) {
-                            if(cmdClients == 1) {
+                        while (cmdClients > 0) {
+                            if (cmdClients == 1) {
                                 this.printAllClientsXML();
                             }
-                            if(cmdClients == 2) {
+                            if (cmdClients == 2) {
                                 this.XMLAddClients();
                             }
-                            if(cmdClients == 3) {
+                            if (cmdClients == 3) {
                                 this.XMLDeleteClients();
                             }
-                            if(cmdClients == 4) {
+                            if (cmdClients == 4) {
                                 this.XMLUpdateClient();
                             }
                             cmdClients = menuClients();
@@ -207,46 +207,13 @@ public class Console {
                     if (cmdMain == 4) {
                         this.filterClientsXML();
                     }
-                    if(cmdMain == 5) {
+                    if (cmdMain == 5) {
                         this.sortClientsXML();
                     }
                     cmdMain = menu();
                 }
             }
         }
-    }
-
-    /**
-     * Initializes the application with some valid entities
-     */
-    private void initialize() {
-        Book book1 = new Book("2AB3221", "Harry Potter 1", "J.K. Rowling", 32);
-        book1.setId(1L);
-        this.bookService.addBook(book1);
-        Book book2 = new Book("433qwdE", "Lolita", "Vladimir Nabokov", 27);
-        book2.setId(2L);
-        this.bookService.addBook(book2);
-        Book book3 = new Book("wdaw221", "Jane Eyre", "Charlotte Brontë", 40);
-        book3.setId(3L);
-        this.bookService.addBook(book3);
-        Book book4 = new Book("2e21dT1", "Wuthering Heights", "Emily Brontë", 32);
-        book4.setId(4L);
-        this.bookService.addBook(book4);
-        Book book5 = new Book("7654wsd", "The Great Gatsby", "F. Scott Fitzgerald", 30);
-        book5.setId(5L);
-        this.bookService.addBook(book5);
-    }
-
-    private void initializeC() {
-        Client client1 = new Client("1", "Harry", 0);
-        client1.setId(1L);
-        this.clientService.addClient(client1);
-        Client client2 = new Client("2", "Harry", 0);
-        client2.setId(2L);
-        this.clientService.addClient(client2);
-        Client client3 = new Client("3", "Harry", 0);
-        client3.setId(3L);
-        this.clientService.addClient(client3);
     }
 
     /**
@@ -280,12 +247,12 @@ public class Console {
      * Adds a book to the repository
      */
     private void addBooks() {
-        Book book = this.readBook();
 
         try {
+            Book book = this.readBook();
             this.bookService.addBook(book);
             this.XMLBookService.addBook(book);
-        } catch (ValidatorException e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -304,12 +271,12 @@ public class Console {
 
 
     private void XMLAddBooks() {
-        Book book = this.readBook();
 
         try {
+            Book book = this.readBook();
             this.XMLBookService.addBook(book);
-        } catch (ValidatorException e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -382,12 +349,12 @@ public class Console {
      * Updates a book from the repository
      */
     private void updateBooks() {
-        Book book = this.readBook();
 
         try {
+            Book book = this.readBook();
             this.bookService.updateBook(book);
-        } catch (ValidatorException e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -400,50 +367,52 @@ public class Console {
         try {
             this.clientService.updateClient(client);
         } catch (ValidatorException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     private void updateBookXML() {
-        System.out.println("Book id: ");
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+//        System.out.println("Book id: ");
+//        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+//
+//        try {
+//            Long id = Long.valueOf(bufferRead.readLine());
+//            this.XMLBookService.deleteBook(id);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        this.XMLDeleteBooks();
+        this.XMLAddBooks();
 
-        try {
-            Long id = Long.valueOf(bufferRead.readLine());
-            this.XMLBookService.deleteBook(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Book book = this.readBook();
-
-        try {
-            this.XMLBookService.addBook(book);
-        } catch (ValidatorException e) {
-            System.out.println(e);
-        }
+//        try {
+//            Book book = this.readBook();
+//            this.XMLBookService.addBook(book);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void XMLUpdateClient() {
-        System.out.println("Client id: ");
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+//        System.out.println("Client id: ");
+//        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+//
+//        try {
+//            Long id = Long.valueOf(bufferRead.readLine());
+//            this.XMLClientService.deleteClient(id);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        this.XMLDeleteClients();
+        this.XMLAddClients();
 
-        try {
-            Long id = Long.valueOf(bufferRead.readLine());
-            this.XMLClientService.deleteClient(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Client client = this.readClient();
-
-        try {
-            this.XMLClientService.addClient(client);
-        } catch (ValidatorException e) {
-            System.out.println(e);
-        }
-
-
+//        Client client = this.readClient();
+//
+//        try {
+//            this.XMLClientService.addClient(client);
+//        } catch (ValidatorException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void buyBook() {
@@ -460,13 +429,13 @@ public class Console {
             final int[] price = new int[1];
             this.purchaseService.addPurchase(purchase);
             books.forEach(i -> {
-                if(i.getId().equals(purchase.getIdBook())) {
+                if (i.getId().equals(purchase.getIdBook())) {
                     price[0] = i.getPrice();
                 }
             });
 
             clients.forEach((i) -> {
-                if(i.getId().equals(purchase.getIdClient())) {
+                if (i.getId().equals(purchase.getIdClient())) {
                     i.setSpent(i.getSpent() + price[0]);
                 }
             });
@@ -513,29 +482,25 @@ public class Console {
 
     /**
      * Reads a book from the console
+     *
      * @return the book object
      */
-    private Book readBook() {
+    private Book readBook() throws Exception {
         System.out.println("Read book {id, serialNumber, name, author, price}");
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-
-        try {
-            Long id = Long.valueOf(bufferRead.readLine());
-            String serialNumber = bufferRead.readLine();
-            String name = bufferRead.readLine();
-            String author = bufferRead.readLine();
-            int price = Integer.parseInt(bufferRead.readLine());
-            Book book = new Book(serialNumber, name, author, price);
-            book.setId(id);
-            return book;
-        } catch (IOException e) {
-            System.out.println(e);
-            return null;
-        }
+        Long id = Long.valueOf(bufferRead.readLine());
+        String serialNumber = bufferRead.readLine();
+        String name = bufferRead.readLine();
+        String author = bufferRead.readLine();
+        int price = Integer.parseInt(bufferRead.readLine());
+        Book book = new Book(serialNumber, name, author, price);
+        book.setId(id);
+        return book;
     }
 
     /**
      * Reads a client from the console
+     *
      * @return the client as the object
      */
     private Client readClient() {

@@ -42,11 +42,11 @@ public class ClientFileRepository extends InMemoryRepository<Long, Client> {
                 try {
                     super.save(client);
                 } catch (ValidatorException e) {
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
             });
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
     }
 
