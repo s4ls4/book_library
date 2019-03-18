@@ -104,7 +104,7 @@ public class Console {
     /**
      * Starts the application
      */
-    public void runConsole() throws Exception {
+    public void runConsole() {
 
         int format = menuFormat();
         while (format > 0) {
@@ -272,7 +272,7 @@ public class Console {
     }
 
     private void printAllClientsXML() {
-        Set<Book> client = this.XMLBookService.getAllBooks();
+        Set<Client> client = this.XMLClientService.getAllClients();
         client.forEach((i) -> System.out.println(i.toString()));
     }
 

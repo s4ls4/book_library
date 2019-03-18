@@ -68,7 +68,7 @@ public class main {
         XMLBookService XMLBookService = new XMLBookService(XMLBookRepo);
 
         Validator<Client> clientValidatorXML = new ClientValidator();
-        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
 
