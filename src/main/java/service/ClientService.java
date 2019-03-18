@@ -35,13 +35,26 @@ public class ClientService {
      * Function for accessing all the entities
      * @return a stream with all the objects
      */
-    public Set<Client> getAllClients() {
+    public Set getAllClients() {
         Iterable<Client> clients = this.repository.findAll();
         return (Set) StreamSupport.stream(clients.spliterator(), false).collect(Collectors.toSet());
     }
 
+    /**
+     * Function that deletes a client
+     * @param id the id of the required client
+     */
     public void deleteClient(Long id) {
         repository.delete(id);
+    }
+
+    /**
+     * Dunction that updates a client
+     * @param client the new object
+     * @throws ValidatorException
+     */
+    public void updateClient(Client client) throws ValidatorException{
+        repository.update(client);
     }
 
 }

@@ -48,4 +48,13 @@ public class BookService {
     public void deleteBook(Long id) {
         repository.delete(id);
     }
+
+    /**
+     * Function that updates a book
+     * @param book the new object
+     * @throws ValidatorException
+     */
+    public void updateBook(Book book) throws ValidatorException{
+        repository.update(book);
+    }
 }

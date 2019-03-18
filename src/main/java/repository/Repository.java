@@ -40,4 +40,12 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
      * @return an {@code Optional} - null if there is no entity with the given id, otherwise the removed entity.
      */
     Optional<T> delete(ID id);
+
+    /**
+     *  Updates a certain entity
+     * @param entity the new values as object
+     * @return an {@code Optional} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
+     * @throws ValidatorException if the entity is not valid
+     */
+    Optional<T> update(T entity) throws ValidatorException;
 }
