@@ -1,9 +1,15 @@
 package service;
 
+import domain.Book;
 import domain.Client;
 import domain.validators.ValidatorException;
+import repository.Paging.Page;
+import repository.Paging.PageRequest;
+import repository.Paging.Pageable;
+import repository.Paging.PagingRepository;
 import repository.Repository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -12,14 +18,37 @@ import java.util.stream.StreamSupport;
  * author: Stefi Nicoara
  */
 public class ClientService {
-    private Repository<Long, Client> repository;
+    private PagingRepository<Long, Client> repository;
+
+    private int page = 0;
+    private int size = 1;
+
 
     /**
      * constructor for the client service
      * @param repository - the repository
      */
-    public ClientService(Repository<Long, Client> repository) {
+    public ClientService(PagingRepository<Long, Client> repository) {
         this.repository = repository;
+    }
+
+    //COPY THIS TO THE OTHER SERVICES
+    public void setPageSize(int size) {
+        this.size = size;
+        this.page = 0;
+    }
+
+    //COPY THIS TO THE OTHER SERVICES
+    public Set<Client> getNextClient() {
+        Pageable pageable = PageRequest.of(size, page);
+        try{
+            Page<Client> clientPage = repository.findAll(pageable);
+            page = clientPage.nextPageable().getPageNumber();
+            return clientPage.getContent().collect(Collectors.toSet());
+        }catch (IndexOutOfBoundsException ex) {
+            page = 0;
+            return new HashSet<>();
+        }
     }
 
     /**

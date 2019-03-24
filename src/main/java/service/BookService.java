@@ -3,8 +3,13 @@ package service;
 
 import domain.Book;
 import domain.validators.ValidatorException;
+import repository.Paging.Page;
+import repository.Paging.PageRequest;
+import repository.Paging.Pageable;
+import repository.Paging.PagingRepository;
 import repository.Repository;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -13,14 +18,38 @@ import java.util.stream.StreamSupport;
  *  author: Stefi Nicoara
  */
 public class BookService {
-    private Repository<Long, Book> repository;
+    private PagingRepository<Long, Book> repository;
+
+    //COPY THIS TO THE OTHER SERVICES
+    private int page = 0;
+    private int size = 1;
+
 
     /**
      * constructor for the book service
      * @param repository - the repository
      */
-    public BookService(Repository<Long, Book> repository) {
+    public BookService(PagingRepository<Long, Book> repository) {
         this.repository = repository;
+    }
+
+    //COPY THIS TO THE OTHER SERVICES
+    public void setPageSize(int size) {
+        this.size = size;
+        this.page = 0;
+    }
+
+    //COPY THIS TO THE OTHER SERVICES
+    public Set<Book> getNextBook() {
+        Pageable pageable = PageRequest.of(size, page);
+        try{
+            Page<Book> bookPage = repository.findAll(pageable);
+            page = bookPage.nextPageable().getPageNumber();
+            return bookPage.getContent().collect(Collectors.toSet());
+        }catch (IndexOutOfBoundsException ex) {
+            page = 0;
+            return new HashSet<>();
+        }
     }
 
     /**
@@ -28,7 +57,6 @@ public class BookService {
      * @param book a book object
      * @throws ValidatorException
      */
-
     public void addBook(Book book) throws ValidatorException {
         repository.save(book);
     }

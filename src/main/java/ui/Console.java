@@ -544,4 +544,60 @@ public class Console {
             return null;
         }
     }
+
+    private void printBooksWithPaging() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter page size: ");
+        int size = scanner.nextInt();
+        bookService.setPageSize(size);
+
+        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            }
+            if (!cmd.equals("n")) {
+                System.out.println("this option is not yet implemented");
+                continue;
+            }
+
+            Set<Book> books = bookService.getNextBook();
+            if (books.size() == 0) {
+                System.out.println("That's all books");
+                break;
+            }
+            books.forEach(b -> System.out.println(b));
+        }
+    }
+
+    private void printClientsWithPaging() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter page size: ");
+        int size = scanner.nextInt();
+        clientService.setPageSize(size);
+
+        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            }
+            if (!cmd.equals("n")) {
+                System.out.println("this option is not yet implemented");
+                continue;
+            }
+
+            Set<Client> clients = clientService.getNextClient();
+            if (clients.size() == 0) {
+                System.out.println("That's all books");
+                break;
+            }
+            clients.forEach(c -> System.out.println(c));
+        }
+    }
 }

@@ -29,6 +29,4 @@ public class XMLBookService {
     public void deleteBook(Long ID) {
         xmlRepo.delete(ID);
     }
-
-
 }
