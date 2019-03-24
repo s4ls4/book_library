@@ -22,30 +22,33 @@ public class main {
             System.out.println(e);
         }
 
-        Validator<Book> bookValidatorFile = new BookValidator();
-        Repository<Long, Book> FileBookRepo = new BookFileRepository(bookValidatorFile, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
+        Validator<Book> bookValidator= new BookValidator();
+        Validator<Client> clientValidator= new ClientValidator();
+        Validator<Purchase> purchaseValidator = new PurchaseValidator();
+
+
+        Repository<Long, Book> FileBookRepo = new BookFileRepository(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
         BookService bookServiceFile = new BookService(FileBookRepo);
 
-        Validator<Client> clientValidatorFile = new ClientValidator();
-        Repository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidatorFile, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
+        Repository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
         ClientService clientServiceFile = new ClientService(FileClientRepo);
 
-
-
-        Validator<Purchase> purchaseValidator = new PurchaseValidator();
         Repository<Long, Purchase> purchaseRepository = new InMemoryRepository<>(purchaseValidator);
         PurchaseService purchaseService = new PurchaseService(purchaseRepository);
 
-        Validator<Book> bookValidatorXML = new BookValidator();
-        Repository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Repository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         XMLBookService XMLBookService = new XMLBookService(XMLBookRepo);
 
-        Validator<Client> clientValidatorXML = new ClientValidator();
-        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidatorXML, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
+        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
+        Repository<Long, Book> DBBookRepo = new BookDBRepo(bookValidator);
+        DBBookService DBBookService = new DBBookService(DBBookRepo);
 
-        Console console = new Console(bookServiceFile, clientServiceFile, purchaseService,XMLBookService, XMLClientService);
+        Repository<Long, Client> DBClientRepo = new ClientDBRepo(clientValidator);
+        DBClientService DBClientService = new DBClientService(DBClientRepo);
+
+        Console console = new Console(bookServiceFile, clientServiceFile, purchaseService,XMLBookService, XMLClientService, DBBookService, DBClientService);
         console.runConsole();
         System.out.println("Bye World!");
     }

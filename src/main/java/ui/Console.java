@@ -26,15 +26,21 @@ public class Console {
     private PurchaseService purchaseService;
     private XMLBookService XMLBookService;
     private XMLClientService XMLClientService;
+    private DBBookService DBBookService;
+    private DBClientService DBClientService;
 
 
-    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService, XMLBookService XMLBookService, XMLClientService XMLClientService) {
+    public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService,
+                   XMLBookService XMLBookService, XMLClientService XMLClientService, DBBookService DBBookService,
+                   DBClientService DBClientService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
         this.purchaseService = purchaseService;
         this.XMLBookService = XMLBookService;
         this.XMLClientService = XMLClientService;
+        this.DBBookService = DBBookService;
+        this.DBClientService = DBClientService;
     }
 
     private int menuFormat() {
@@ -169,7 +175,7 @@ public class Console {
                                 this.printAllBooksXML();
                             }
                             if (cmdBooks == 2) {
-                                this.XMLAddBooks();
+                                this.DBAddBooks();
                             }
                             if (cmdBooks == 3) {
                                 this.XMLDeleteBooks();
@@ -243,6 +249,16 @@ public class Console {
         client.forEach((i) -> System.out.println(i.toString()));
     }
 
+    private void printAllBooksDB() {
+        Set<Book> books = this.DBBookService.getAllBooks();
+        books.forEach((i) -> System.out.println((i.toString())));
+    }
+
+    private void printAllClientsDB() {
+        Set<Client> clients = this.DBClientService.getAllClients();
+        clients.forEach((i) -> System.out.println((i.toString())));
+    }
+
     /**
      * Adds a book to the repository
      */
@@ -253,7 +269,7 @@ public class Console {
             this.bookService.addBook(book);
             this.XMLBookService.addBook(book);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -265,7 +281,7 @@ public class Console {
         try {
             this.clientService.addClient(client);
         } catch (ValidatorException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -287,9 +303,32 @@ public class Console {
         try {
             this.XMLClientService.addClient(client);
         } catch (ValidatorException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
+
+
+    private void DBAddBooks() {
+
+        try {
+            Book book = this.readBook();
+            this.DBBookService.addBook(book);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+
+    private void DBAddClients() {
+
+        try {
+            Client client = this.readClient();
+            this.DBClientService.addClient(client);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
 
     /**
      * Deletes a book from the repository
@@ -305,6 +344,7 @@ public class Console {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Deletes a client from the repository
@@ -345,6 +385,33 @@ public class Console {
         }
     }
 
+    private void DBDeleteBooks() {
+
+        System.out.println("Book id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.DBBookService.deleteBook(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void DBDeleteClients() {
+        System.out.println("Client id: ");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            Long id = Long.valueOf(bufferRead.readLine());
+            this.DBClientService.deleteClient(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /**
      * Updates a book from the repository
      */
@@ -372,54 +439,41 @@ public class Console {
     }
 
     private void updateBookXML() {
-//        System.out.println("Book id: ");
-//        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-//
-//        try {
-//            Long id = Long.valueOf(bufferRead.readLine());
-//            this.XMLBookService.deleteBook(id);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         this.XMLDeleteBooks();
         this.XMLAddBooks();
-
-
-//        try {
-//            Book book = this.readBook();
-//            this.XMLBookService.addBook(book);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     private void XMLUpdateClient() {
-//        System.out.println("Client id: ");
-//        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-//
-//        try {
-//            Long id = Long.valueOf(bufferRead.readLine());
-//            this.XMLClientService.deleteClient(id);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         this.XMLDeleteClients();
         this.XMLAddClients();
+    }
 
-//        Client client = this.readClient();
-//
-//        try {
-//            this.XMLClientService.addClient(client);
-//        } catch (ValidatorException e) {
-//            System.out.println(e.getMessage());
-//        }
+    private void DBupdateBooks() {
+
+        try {
+            Book book = this.readBook();
+            this.DBBookService.updateBook(book);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void DBupdateClient() {
+        Client client = this.readClient();
+
+        try {
+            this.DBClientService.updateClient(client);
+        } catch (ValidatorException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void buyBook() {
         Purchase purchase = this.readPurchase();
         Set<Client> clients = this.clientService.getAllClients();
         Set<Book> books = this.bookService.getAllBooks();
-
 
         buyOperation(purchase, clients, books);
     }
@@ -441,7 +495,7 @@ public class Console {
             });
 
         } catch (ValidatorException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -518,7 +572,7 @@ public class Console {
             return client;
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -540,7 +594,7 @@ public class Console {
             return p;
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }
