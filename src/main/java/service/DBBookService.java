@@ -4,6 +4,7 @@ import domain.Book;
 import domain.validators.ValidatorException;
 import repository.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,11 +17,11 @@ public class DBBookService {
     }
 
     public void addBook(Book book) throws ValidatorException {
-        dbRepo.save(book);
+        dbRepo.save(Optional.ofNullable(book));
     }
 
     public void deleteBook(Long id) throws ValidatorException{
-        dbRepo.delete(id);
+        dbRepo.delete(Optional.ofNullable(id));
     }
 
     public Set getAllBooks() {
@@ -29,7 +30,7 @@ public class DBBookService {
     }
 
     public void updateBook(Book book) throws ValidatorException{
-        dbRepo.update(book);
+        dbRepo.update(Optional.ofNullable(book));
     }
 
 

@@ -4,6 +4,7 @@ import domain.Client;
 import domain.validators.ValidatorException;
 import repository.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,11 +17,11 @@ public class DBClientService {
     }
 
     public void addClient(Client client) throws ValidatorException {
-        dbRepo.save(client);
+        dbRepo.save(Optional.ofNullable(client));
     }
 
     public void deleteClient(Long id) throws ValidatorException{
-        dbRepo.delete(id);
+        dbRepo.delete(Optional.ofNullable(id));
     }
 
     public Set getAllClients() {
@@ -29,7 +30,7 @@ public class DBClientService {
     }
 
     public void updateClient(Client client) throws ValidatorException{
-        dbRepo.update(client);
+        dbRepo.update(Optional.ofNullable(client));
     }
 
 }

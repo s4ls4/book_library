@@ -11,8 +11,8 @@ import java.util.Optional;
 public class BookDBRepo extends InMemoryRepository<Long, Book> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/LibraryApp";
-    private static final String USERNAME = System.getProperty("username");
-    private static final String PASSWORD = System.getProperty("password");
+    private static final String USERNAME = System.getProperty("postgres");
+    private static final String PASSWORD = System.getProperty("98blionlion");
 
     public BookDBRepo(Validator<Book> validator){
         super(validator);

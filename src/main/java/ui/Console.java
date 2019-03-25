@@ -118,10 +118,10 @@ public class Console {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
                             if (cmdBooks == 1) {
-                                this.printBooksWithPaging();
+                                this.printAllBooksDB();
                             }
                             if (cmdBooks == 2) {
-                                this.addBooks();
+                                this.DBAddBooks();
                             }
                             if (cmdBooks == 3) {
                                 this.deleteBooks();
