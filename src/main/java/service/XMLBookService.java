@@ -23,7 +23,6 @@ public class XMLBookService {
         this.xmlRepo = xmlRepo;
     }
 
-
     //COPY THIS TO THE OTHER SERVICES
     public void setPageSize(int size) {
         this.size = size;
@@ -37,8 +36,7 @@ public class XMLBookService {
             Page<Book> bookPage = xmlRepo.findAll(pageable);
             page = bookPage.nextPageable().getPageNumber();
             return bookPage.getContent().collect(Collectors.toSet());
-        }
-        catch (IndexOutOfBoundsException ex) {
+        }catch (IndexOutOfBoundsException ex) {
             page = 0;
             return new HashSet<>();
         }

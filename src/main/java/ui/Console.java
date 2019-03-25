@@ -25,11 +25,12 @@ public class Console {
     private XMLClientService XMLClientService;
     private DBBookService DBBookService;
     private DBClientService DBClientService;
+    private DBPurchaseService DBPurchaseService;
 
 
     public Console(BookService bookService, ClientService clientService, PurchaseService purchaseService,
                    XMLBookService XMLBookService, XMLClientService XMLClientService, DBBookService DBBookService,
-                   DBClientService DBClientService) {
+                   DBClientService DBClientService, DBPurchaseService DBPurchaseService) {
 
         this.bookService = bookService;
         this.clientService = clientService;
@@ -38,6 +39,7 @@ public class Console {
         this.XMLClientService = XMLClientService;
         this.DBBookService = DBBookService;
         this.DBClientService = DBClientService;
+        this.DBPurchaseService = DBPurchaseService;
     }
 
     private int menuFormat() {
@@ -255,6 +257,11 @@ public class Console {
     private void printAllClientsDB() {
         Set<Client> clients = this.DBClientService.getAllClients();
         clients.forEach((i) -> System.out.println((i.toString())));
+    }
+
+    private void printAllPurchaseDB() {
+        Set<Purchase> purchases = this.DBPurchaseService.getAllPurchases();
+        purchases.forEach((i)->System.out.println((i.toString())));
     }
 
     /**
@@ -504,6 +511,35 @@ public class Console {
 
 
         buyOperation(purchase, clients, books);
+    }
+
+    private void DBbuyBook() {
+        Purchase purchase = this.readPurchase();
+        Set<Client> clients = this.DBClientService.getAllClients();
+        Set<Book> books = this.DBBookService.getAllBooks();
+
+        DBbuyOperation(purchase, clients, books);
+    }
+
+    private void DBbuyOperation(Purchase purchase, Set<Client> clients, Set<Book> books) {
+        try {
+            final int[] price = new int[1];
+            this.DBPurchaseService.addPurchase(purchase);
+            books.forEach(i -> {
+                if (i.getId().equals(purchase.getIdBook())) {
+                    price[0] = i.getPrice();
+                }
+            });
+
+            clients.forEach((i) -> {
+                if (i.getId().equals(purchase.getIdClient())) {
+                    i.setSpent(i.getSpent() + price[0]);
+                }
+            });
+
+        } catch (ValidatorException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void filterClients() {

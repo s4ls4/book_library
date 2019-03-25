@@ -60,7 +60,10 @@ public class main {
         Repository<Long, Client> DBClientRepo = new ClientDBRepo(clientValidator);
         DBClientService DBClientService = new DBClientService(DBClientRepo);
 
-        Console console = new Console(bookServiceFile, clientServiceFile, purchaseService,XMLBookService, XMLClientService, DBBookService, DBClientService);
+        Repository<Long, Purchase> DBPurchaseRepo = new PurchaseDBRepo(purchaseValidator);
+        DBPurchaseService DBPurchaseService = new DBPurchaseService(DBPurchaseRepo);
+
+        Console console = new Console(bookServiceFile, clientServiceFile, purchaseService,XMLBookService, XMLClientService, DBBookService, DBClientService, DBPurchaseService);
         console.runConsole();
         System.out.println("Bye World!");
     }
