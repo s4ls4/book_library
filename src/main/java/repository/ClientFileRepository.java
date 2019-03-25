@@ -40,7 +40,7 @@ public class ClientFileRepository extends InMemoryRepository<Long, Client> {
                 client.setId(id);
 
                 try {
-                    super.save(client);
+                    super.save(Optional.ofNullable(client));
                 } catch (ValidatorException e) {
                     System.out.println(e.getMessage());
                 }
@@ -51,12 +51,12 @@ public class ClientFileRepository extends InMemoryRepository<Long, Client> {
     }
 
     @Override
-    public Optional<Client> save(Client entity) throws ValidatorException {
+    public Optional<Client> save(Optional<Client> entity) throws ValidatorException {
         Optional<Client> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
-        saveToFile(entity);
+        saveToFile(entity.get());
         return Optional.empty();
     }
 

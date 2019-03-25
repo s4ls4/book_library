@@ -11,6 +11,7 @@ import repository.Paging.PagingRepository;
 import repository.Repository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -46,7 +47,7 @@ public class PurchaseService {
     }
 
     public void addPurchase(Purchase purchase) throws ValidatorException {
-        repository.save(purchase);
+        repository.save(Optional.ofNullable(purchase));
     }
 
     public Set getAllPurchases() {

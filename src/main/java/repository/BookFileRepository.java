@@ -42,23 +42,23 @@ public class BookFileRepository extends InMemoryRepository<Long, Book> {
                 book.setId(id);
 
                 try {
-                    super.save(book);
+                    super.save(Optional.ofNullable(book));
                 } catch (ValidatorException e) {
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
             });
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
-    public Optional<Book> save(Book entity) throws ValidatorException {
+    public Optional<Book> save(Optional<Book> entity) throws ValidatorException {
         Optional<Book> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
-        saveToFile(entity);
+        saveToFile(entity.get());
         return Optional.empty();
     }
 

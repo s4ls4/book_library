@@ -10,6 +10,7 @@ import repository.Paging.PagingRepository;
 import repository.Repository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,7 +58,7 @@ public class ClientService {
      * @throws ValidatorException
      */
     public void addClient(Client client) throws ValidatorException {
-        repository.save(client);
+        repository.save(Optional.ofNullable(client));
     }
 
     /**
@@ -74,7 +75,7 @@ public class ClientService {
      * @param id the id of the required client
      */
     public void deleteClient(Long id) {
-        repository.delete(id);
+        repository.delete(Optional.ofNullable(id));
     }
 
     /**
@@ -83,7 +84,7 @@ public class ClientService {
      * @throws ValidatorException
      */
     public void updateClient(Client client) throws ValidatorException{
-        repository.update(client);
+        repository.update(Optional.ofNullable(client));
     }
 
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<BookXML>
+<?xml version="1.0" encoding="UTF-8"?><BookXML>
 
     <book id="30">
         <serialnumber>wdadwad</serialnumber>
@@ -19,4 +18,4 @@
         <author>safaff</author>
         <price>67</price>
     </book>
-</BookXML>
+<book id="434"><serialnumber>efsfges</serialnumber><name>fesfesf</name><author>esfsef</author><price>50</price></book><book id="34"><serialnumber>efsfes</serialnumber><name>esfesf</name><author>esfes</author><price>30</price></book></BookXML>

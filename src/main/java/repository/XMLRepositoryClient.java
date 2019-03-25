@@ -58,13 +58,13 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
 
 
     @Override
-    public Optional<Client> save(Client entity) throws ValidatorException {
+    public Optional<Client> save(Optional<Client> entity) throws ValidatorException {
         Optional<Client> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
         try {
-            saveClient(entity);
+            saveClient(entity.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,9 +156,9 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
     }
 
 
-    public Optional<Client> delete(Long id){
+    public Optional<Client> delete(Optional<Long> id){
         try {
-            deleteXML(id);
+            deleteXML(id.get());
         } catch (Exception e) {
             e.printStackTrace();
         }

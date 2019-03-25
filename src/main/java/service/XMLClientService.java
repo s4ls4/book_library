@@ -2,6 +2,7 @@ package service;
 import domain.Client;
 import repository.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,7 +17,7 @@ public class XMLClientService {
 
     public void addClient(Client Client) {
 
-        xmlRepo.save(Client);
+        xmlRepo.save(Optional.ofNullable(Client));
     }
 
     public Set getAllClients() {
@@ -25,6 +26,6 @@ public class XMLClientService {
     }
 
     public void deleteClient(Long ID) {
-        xmlRepo.delete(ID);
+        xmlRepo.delete(Optional.ofNullable(ID));
     }
 }

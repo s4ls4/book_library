@@ -115,7 +115,7 @@ public class Console {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
                             if (cmdBooks == 1) {
-                                this.printAllBooks();
+                                this.printBooksWithPaging();
                             }
                             if (cmdBooks == 2) {
                                 this.addBooks();
@@ -133,7 +133,7 @@ public class Console {
                         int cmdClients = menuClients();
                         while (cmdClients > 0) {
                             if (cmdClients == 1) {
-                                this.printAllClients();
+                                this.printClientsWithPaging();
                             }
                             if (cmdClients == 2) {
                                 this.addClients();
@@ -518,7 +518,7 @@ public class Console {
             return client;
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -540,7 +540,7 @@ public class Console {
             return p;
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -558,21 +558,18 @@ public class Console {
             if (cmd.equals("x")) {
                 System.out.println("exit");
                 break;
+            } else if (cmd.equals("n")) {
+                Set<Book> books = bookService.getNextBook();
+                if (books.size() == 0) {
+                    System.out.println("no more students");
+                    break;
+                }
+                books.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
             }
-            if (!cmd.equals("n")) {
-                System.out.println("this option is not yet implemented");
-                continue;
-            }
-
-            Set<Book> books = bookService.getNextBook();
-            if (books.size() == 0) {
-                System.out.println("That's all books");
-                break;
-            }
-            books.forEach(b -> System.out.println(b));
         }
     }
-
     private void printClientsWithPaging() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter page size: ");
@@ -586,18 +583,16 @@ public class Console {
             if (cmd.equals("x")) {
                 System.out.println("exit");
                 break;
+            } else if (cmd.equals("n")) {
+                Set<Client> clients = clientService.getNextClient();
+                if (clients.size() == 0) {
+                    System.out.println("no more students");
+                    break;
+                }
+                clients.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
             }
-            if (!cmd.equals("n")) {
-                System.out.println("this option is not yet implemented");
-                continue;
-            }
-
-            Set<Client> clients = clientService.getNextClient();
-            if (clients.size() == 0) {
-                System.out.println("That's all books");
-                break;
-            }
-            clients.forEach(c -> System.out.println(c));
         }
     }
 }

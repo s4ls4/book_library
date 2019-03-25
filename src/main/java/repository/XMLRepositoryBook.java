@@ -59,13 +59,13 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
 
 
     @Override
-    public Optional<Book> save(Book entity) throws ValidatorException {
+    public Optional<Book> save(Optional<Book> entity) throws ValidatorException {
         Optional<Book> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
         try {
-            saveBook(entity);
+            saveBook(entity.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,9 +158,9 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
     }
 
 
-    public Optional<Book> delete(Long id){
+    public Optional<Book> delete(Optional<Long> id){
         try {
-            deleteXML(id);
+            deleteXML(id.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
