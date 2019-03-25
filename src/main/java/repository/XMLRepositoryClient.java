@@ -37,7 +37,8 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
         Document document = DocumentBuilderFactory
                 .newInstance()
                 .newDocumentBuilder()
-                .parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
+                .parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML");
+                //.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         Element root = document.getDocumentElement();
 
         Element ClientElement = document.createElement("Client");
@@ -53,7 +54,8 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
-                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML")));
+                        "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML")));
+                       // "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML")));
     }
 
 
@@ -109,6 +111,7 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
 
         DocumentBuilder documentBuilder =
                 documentBuilderFactory.newDocumentBuilder();
+        //Document document = documentBuilder.parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML");
         Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         Element root = document.getDocumentElement();
 
@@ -137,7 +140,8 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
+        Document document = documentBuilder.parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML");
+        //Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
 
         NodeList nodes = document.getElementsByTagName("Client");
         for (int i = 0; i < nodes.getLength(); i++){
@@ -152,6 +156,7 @@ public class XMLRepositoryClient extends InMemoryRepository<Long, Client> {
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
+                       // "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML")));
                         "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML")));
     }
 

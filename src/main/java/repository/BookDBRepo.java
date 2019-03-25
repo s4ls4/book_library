@@ -11,8 +11,8 @@ import java.util.Optional;
 public class BookDBRepo extends InMemoryRepository<Long, Book> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/LibraryApp";
-    private static final String USERNAME = System.getProperty("postgres");
-    private static final String PASSWORD = System.getProperty("98blionlion");
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "98blionlion";
 
     public BookDBRepo(Validator<Book> validator){
         super(validator);
@@ -22,7 +22,7 @@ public class BookDBRepo extends InMemoryRepository<Long, Book> {
     public Iterable<Book> findAll(){
 
         List<Book> books = new ArrayList<>();
-        String sql ="SELECT * FROM Books";
+        String sql ="SELECT * FROM books";
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
@@ -46,17 +46,36 @@ public class BookDBRepo extends InMemoryRepository<Long, Book> {
         return books;
     }
 
-    public Optional<Book> save(Book book) {
-        String sql = "INSERT INTO Books(bid,bserialNumber,bname,author,price) values (?,?,?,?,?)";
+
+    public Optional<Book> save(Optional<Book> book) {
+
+        String sql = "insert into books(bname,\"bserialNumber\",author,price,bid) values (?,?,?,?,?)";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setLong(1, book.getId());
-            statement.setString(2, book.getSerialNumber());
-            statement.setString(3, book.getName());
-            statement.setString(4, book.getAuthor());
-            statement.setInt(5, book.getPrice());
+            statement.setString(1, book.get().getName());
+            statement.setString(2, book.get().getSerialNumber());
+            statement.setString(3, book.get().getAuthor());
+            statement.setInt(4, book.get().getPrice());
+            statement.setLong(5, book.get().getId());
+
+            statement.executeUpdate();
+            return Optional.empty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.of(book.get());
+
+    }
+
+    public Optional<Book> delete(Optional<Long> id) {
+        String sql = "DELETE FROM books WHERE bid=?";
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
+                PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, id.get());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -65,32 +84,17 @@ public class BookDBRepo extends InMemoryRepository<Long, Book> {
         return Optional.empty();
     }
 
-    public Optional<Book> delete(Long id) {
-        String sql = "DELETE FROM Books WHERE bid=?";
+    public Optional<Book> update(Optional<Book> book) {
+        String sql = "UPDATE books SET \"bserialNumber\"=?, bname=?, author=?, price=? where bid=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setLong(1, id);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    public Optional<Book> update(Book book) {
-        String sql = "UPDATE Book SET bserialNumber=?, bname=?, author=?, price=? where bid=?";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, book.getSerialNumber());
-            statement.setString(2, book.getName());
-            statement.setString(3, book.getAuthor());
-            statement.setInt(4, book.getPrice());
-            statement.setLong(5, book.getId());
+            statement.setString(1, book.get().getSerialNumber());
+            statement.setString(2, book.get().getName());
+            statement.setString(3, book.get().getAuthor());
+            statement.setInt(4, book.get().getPrice());
+            statement.setLong(5, book.get().getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

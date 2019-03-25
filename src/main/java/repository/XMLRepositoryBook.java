@@ -37,6 +37,7 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
         Document document = DocumentBuilderFactory
                 .newInstance()
                 .newDocumentBuilder()
+                //.parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML");
                 .parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         Element root = document.getDocumentElement();
 
@@ -54,6 +55,7 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
+                        //"C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML")));
                         "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
     }
 
@@ -111,6 +113,7 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
 
         DocumentBuilder documentBuilder =
                 documentBuilderFactory.newDocumentBuilder();
+        //Document document = documentBuilder.parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML");
         Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         Element root = document.getDocumentElement();
 
@@ -126,6 +129,7 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
         return listOfBooks;
     }
 
+
     public Iterable<Book> findAll(){
         try {
             return loadData();
@@ -139,7 +143,8 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+        Document document = documentBuilder.parse("C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML");
+        //Document document = documentBuilder.parse("C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
 
         NodeList nodes = document.getElementsByTagName("book");
         for (int i = 0; i < nodes.getLength(); i++){
@@ -154,7 +159,8 @@ public class XMLRepositoryBook extends InMemoryRepository<Long, Book>{
                 TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(root),
                 new StreamResult(new FileOutputStream(
-                        "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
+                        "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML")));
+                      //  "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML")));
     }
 
 

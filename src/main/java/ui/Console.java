@@ -124,10 +124,10 @@ public class Console {
                                 this.DBAddBooks();
                             }
                             if (cmdBooks == 3) {
-                                this.deleteBooks();
+                                this.DBDeleteBooks();
                             }
                             if (cmdBooks == 4) {
-                                this.updateBooks();
+                                this.DBupdateBooks();
                             }
                             cmdBooks = menuBooks();
                         }
@@ -169,7 +169,8 @@ public class Console {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
                             if (cmdBooks == 1) {
-                                this.printAllBooksXML();
+                                //this.printAllBooksXML();
+                                this.printBooksWithPagingXML();
                             }
                             if (cmdBooks == 2) {
                                 this.DBAddBooks();
@@ -190,7 +191,7 @@ public class Console {
                         int cmdClients = menuClients();
                         while (cmdClients > 0) {
                             if (cmdClients == 1) {
-                                this.printAllClientsXML();
+                                this.printClientsWithPagingXML();
                             }
                             if (cmdClients == 2) {
                                 this.XMLAddClients();
@@ -598,11 +599,11 @@ public class Console {
 
     private void printBooksWithPaging() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("enter page size: ");
+        System.out.println("page size: ");
         int size = scanner.nextInt();
         bookService.setPageSize(size);
 
-        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+        System.out.println("'n' - next | 'x' - exit: ");
 
         while (true) {
             String cmd = scanner.next();
@@ -612,7 +613,7 @@ public class Console {
             } else if (cmd.equals("n")) {
                 Set<Book> books = bookService.getNextBook();
                 if (books.size() == 0) {
-                    System.out.println("no more students");
+                    System.out.println("That's all books!");
                     break;
                 }
                 books.forEach(System.out::println);
@@ -621,13 +622,14 @@ public class Console {
             }
         }
     }
+
     private void printClientsWithPaging() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("enter page size: ");
+        System.out.println("page size: ");
         int size = scanner.nextInt();
         clientService.setPageSize(size);
 
-        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+        System.out.println("'n' - next | 'x' - exit: ");
 
         while (true) {
             String cmd = scanner.next();
@@ -637,7 +639,59 @@ public class Console {
             } else if (cmd.equals("n")) {
                 Set<Client> clients = clientService.getNextClient();
                 if (clients.size() == 0) {
-                    System.out.println("no more students");
+                    System.out.println("That's all clients!");
+                    break;
+                }
+                clients.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
+            }
+        }
+    }
+
+    private void printBooksWithPagingXML() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("page size: ");
+        int size = scanner.nextInt();
+        XMLBookService.setPageSize(size);
+
+        System.out.println("'n' - next | 'x' - exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            } else if (cmd.equals("n")) {
+                Set<Book> books = XMLBookService.getNextBook();
+                if (books.size() == 0) {
+                    System.out.println("That's all books!");
+                    break;
+                }
+                books.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
+            }
+        }
+    }
+
+    private void printClientsWithPagingXML() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("page size: ");
+        int size = scanner.nextInt();
+        XMLClientService.setPageSize(size);
+
+        System.out.println("'n' - next | 'x' - exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            } else if (cmd.equals("n")) {
+                Set<Client> clients = XMLClientService.getNextClient();
+                if (clients.size() == 0) {
+                    System.out.println("That's all clients!");
                     break;
                 }
                 clients.forEach(System.out::println);

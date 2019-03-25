@@ -30,11 +30,14 @@ public class main {
 
 
 
+        //PagingRepository<Long, Book> FileBookRepo = new BookFileRepository(bookValidator, "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\Books");
         PagingRepository<Long, Book> FileBookRepo = new BookFileRepository(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
         BookService bookServiceFile = new BookService(FileBookRepo);
 
 
-        PagingRepository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
+        Validator<Client> clientValidatorFile = new ClientValidator();
+        //PagingRepository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidatorFile, "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\Clients");
+        PagingRepository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidatorFile, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
         ClientService clientServiceFile = new ClientService(FileClientRepo);
 
 
@@ -42,10 +45,12 @@ public class main {
         PurchaseService purchaseService = new PurchaseService(purchaseRepository);
 
 
+        //PagingRepository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidator, "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\BookXML");
         PagingRepository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         XMLBookService XMLBookService = new XMLBookService(XMLBookRepo);
 
 
+        //PagingRepository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Faculty\\MPP\\LibraryApp\\book_library\\src\\main\\resources\\ClientXML");
         PagingRepository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
