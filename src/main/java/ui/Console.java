@@ -9,12 +9,9 @@ import service.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -121,7 +118,7 @@ public class Console {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
                             if (cmdBooks == 1) {
-                                this.printAllBooks();
+                                this.printBooksWithPaging();
                             }
                             if (cmdBooks == 2) {
                                 this.addBooks();
@@ -139,7 +136,7 @@ public class Console {
                         int cmdClients = menuClients();
                         while (cmdClients > 0) {
                             if (cmdClients == 1) {
-                                this.printAllClients();
+                                this.printClientsWithPaging();
                             }
                             if (cmdClients == 2) {
                                 this.addClients();
@@ -596,6 +593,57 @@ public class Console {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    private void printBooksWithPaging() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter page size: ");
+        int size = scanner.nextInt();
+        bookService.setPageSize(size);
+
+        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            } else if (cmd.equals("n")) {
+                Set<Book> books = bookService.getNextBook();
+                if (books.size() == 0) {
+                    System.out.println("no more students");
+                    break;
+                }
+                books.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
+            }
+        }
+    }
+    private void printClientsWithPaging() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter page size: ");
+        int size = scanner.nextInt();
+        clientService.setPageSize(size);
+
+        System.out.println("enter 'n' - for next; 'x' - for exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            } else if (cmd.equals("n")) {
+                Set<Client> clients = clientService.getNextClient();
+                if (clients.size() == 0) {
+                    System.out.println("no more students");
+                    break;
+                }
+                clients.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
+            }
         }
     }
 }

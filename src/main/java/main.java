@@ -6,6 +6,7 @@ import domain.validators.ClientValidator;
 import domain.validators.PurchaseValidator;
 import domain.validators.Validator;
 import repository.*;
+import repository.Paging.PagingRepository;
 import service.*;
 import ui.Console;
 
@@ -22,24 +23,29 @@ public class main {
             System.out.println(e);
         }
 
-        Validator<Book> bookValidator= new BookValidator();
+        Validator<Book> bookValidator = new BookValidator();
         Validator<Client> clientValidator= new ClientValidator();
         Validator<Purchase> purchaseValidator = new PurchaseValidator();
 
 
-        Repository<Long, Book> FileBookRepo = new BookFileRepository(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
+
+        PagingRepository<Long, Book> FileBookRepo = new BookFileRepository(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Books");
         BookService bookServiceFile = new BookService(FileBookRepo);
 
-        Repository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
+
+        PagingRepository<Long, Client> FileClientRepo = new ClientFileRepository(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\Clients");
         ClientService clientServiceFile = new ClientService(FileClientRepo);
 
-        Repository<Long, Purchase> purchaseRepository = new InMemoryRepository<>(purchaseValidator);
+
+        PagingRepository<Long, Purchase> purchaseRepository = new InMemoryRepository<>(purchaseValidator);
         PurchaseService purchaseService = new PurchaseService(purchaseRepository);
 
-        Repository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
+
+        PagingRepository<Long, Book> XMLBookRepo = new XMLRepositoryBook(bookValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\BookXML");
         XMLBookService XMLBookService = new XMLBookService(XMLBookRepo);
 
-        Repository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
+
+        PagingRepository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
         Repository<Long, Book> DBBookRepo = new BookDBRepo(bookValidator);
