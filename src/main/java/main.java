@@ -54,7 +54,7 @@ public class main {
         PagingRepository<Long, Client> XMLClientRepo = new XMLRepositoryClient(clientValidator, "C:\\Users\\Birhan\\Desktop\\Mpp proiecte\\Library_app\\src\\main\\resources\\ClientXML");
         XMLClientService XMLClientService = new XMLClientService(XMLClientRepo);
 
-        Repository<Long, Book> DBBookRepo = new BookDBRepo(bookValidator);
+        PagingRepository<Long, Book> DBBookRepo = new BookDBRepo(bookValidator);
         DBBookService DBBookService = new DBBookService(DBBookRepo);
 
         Repository<Long, Client> DBClientRepo = new ClientDBRepo(clientValidator);

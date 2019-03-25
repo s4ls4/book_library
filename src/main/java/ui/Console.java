@@ -49,6 +49,8 @@ public class Console {
         System.out.println("___________________________");
         System.out.println("1. File");
         System.out.println("2. XML");
+        System.out.println("3. DB");
+
         System.out.println("0. Exit");
 
         Scanner in = new Scanner(System.in);
@@ -120,16 +122,16 @@ public class Console {
                         int cmdBooks = menuBooks();
                         while (cmdBooks > 0) {
                             if (cmdBooks == 1) {
-                                this.printAllBooksDB();
+                                this.printBooksWithPaging();
                             }
                             if (cmdBooks == 2) {
-                                this.DBAddBooks();
+                                this.addBooks();
                             }
                             if (cmdBooks == 3) {
-                                this.DBDeleteBooks();
+                                this.deleteBooks();
                             }
                             if (cmdBooks == 4) {
-                                this.DBupdateBooks();
+                                this.updateBooks();
                             }
                             cmdBooks = menuBooks();
                         }
@@ -175,7 +177,7 @@ public class Console {
                                 this.printBooksWithPagingXML();
                             }
                             if (cmdBooks == 2) {
-                                this.DBAddBooks();
+                                this.XMLAddBooks();
                             }
                             if (cmdBooks == 3) {
                                 this.XMLDeleteBooks();
@@ -218,7 +220,55 @@ public class Console {
                     }
                     cmdMain = menu();
                 }
+
             }
+            if (format == 3) {
+                int cmdMain = menu();
+                while (cmdMain > 0) {
+                    if (cmdMain == 1) {
+                        int cmdBooks = menuBooks();
+                        while (cmdBooks > 0) {
+                            if (cmdBooks == 1) {
+                                this.printBooksWithPagingDB();
+                            }
+                            if (cmdBooks == 2) {
+                                this.DBAddBooks();
+                            }
+                            if (cmdBooks == 3) {
+                                this.DBDeleteBooks();
+                            }
+                            if (cmdBooks == 4) {
+                                this.DBupdateBooks();
+                            }
+                            cmdBooks = menuBooks();
+                        }
+                    }
+                    if (cmdMain == 2) {
+                        int cmdClients = menuClients();
+                        while (cmdClients > 0) {
+                            if (cmdClients == 1) {
+                                this.printAllClientsDB();
+                            }
+                            if (cmdClients == 2) {
+                                this.DBAddClients();
+                            }
+                            if (cmdClients == 3) {
+                                this.DBDeleteClients();
+                            }
+                            if (cmdClients == 4) {
+                                this.DBupdateClient();
+                            }
+                            cmdClients = menuClients();
+                        }
+                    }
+                    if (cmdMain == 3) {
+                        this.DBbuyBook();
+                    }
+                    cmdMain = menu();
+                }
+
+            }
+
         }
     }
 
@@ -659,6 +709,33 @@ public class Console {
         }
     }
 
+    private void printBooksWithPagingDB() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("page size: ");
+        int size = scanner.nextInt();
+        XMLBookService.setPageSize(size);
+
+        System.out.println("'n' - next | 'x' - exit: ");
+
+        while (true) {
+            String cmd = scanner.next();
+            if (cmd.equals("x")) {
+                System.out.println("exit");
+                break;
+            } else if (cmd.equals("n")) {
+                Set<Book> books = DBBookService.getNextBook();
+                if (books.size() == 0) {
+                    System.out.println("That's all books!");
+                    break;
+                }
+                books.forEach(System.out::println);
+            } else {
+                System.out.println("Invalid input!");
+            }
+        }
+    }
+
+
     private void printClientsWithPaging() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("page size: ");
@@ -710,6 +787,9 @@ public class Console {
             }
         }
     }
+
+
+
 
     private void printClientsWithPagingXML() {
         Scanner scanner = new Scanner(System.in);

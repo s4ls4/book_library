@@ -47,7 +47,7 @@ public class ClientDBRepo extends InMemoryRepository<Long, Client> {
 
 
     public Optional<Client> save(Optional<Client> client) {
-        String sql = "INSERT INTO clients(cserialNumber,cname,spent,cid) values (?,?,?,?)";
+        String sql = "INSERT INTO clients(\"cserialNumber\",cname,spent,cid) values (?,?,?,?)";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -80,7 +80,7 @@ public class ClientDBRepo extends InMemoryRepository<Long, Client> {
     }
 
     public Optional<Client> update(Optional<Client> client) {
-        String sql = "UPDATE client SET cserialNumber=?, cname=?, spent=? where cid=?";
+        String sql = "UPDATE client SET \"cserialNumber\"=?, cname=?, spent=? where cid=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
