@@ -20,8 +20,9 @@ public class main {
         try {
             System.out.println(new File(".").getCanonicalPath());
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
+
 
         Validator<Book> bookValidator = new BookValidator();
         Validator<Client> clientValidator= new ClientValidator();
