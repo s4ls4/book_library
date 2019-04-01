@@ -1,9 +1,11 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class Book extends BaseEntity<Long>{
     private String serialNumber;
     private String name;
-    private String author;
+    private ArrayList<Author> author;
     private int price;
 
     public Book() {
@@ -16,7 +18,7 @@ public class Book extends BaseEntity<Long>{
      * @param author must be a string
      * @param price must be an int
      */
-    public Book(String serialNumber, String name, String author, int price) {
+    public Book(String serialNumber, String name, ArrayList<Author> author, int price) {
         this.serialNumber = serialNumber;
         this.name = name;
         this.price = price;
@@ -59,7 +61,7 @@ public class Book extends BaseEntity<Long>{
      * Getter for the author
      * @return the author
      */
-    public String getAuthor() {
+    public ArrayList getAuthor() {
         return author;
     }
 
@@ -67,7 +69,7 @@ public class Book extends BaseEntity<Long>{
      * Setter for the author
      * @param a the author
      */
-    public void setAuthor(String a) {
+    public void setAuthor(ArrayList a) {
         this.author = a;
     }
 

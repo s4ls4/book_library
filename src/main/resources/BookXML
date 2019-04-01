@@ -3,19 +3,50 @@
     <book id="30">
         <serialnumber>wdadwad</serialnumber>
         <name>wadawdaw</name>
-        <author>wadawdw</author>
+        <authors>
+            <author>Ion - 28736</author>
+            <author>Barbu - 3237</author>
+            <author>Delavrancea - 322</author>
+        </authors>
         <price>50</price>
     </book>
     <book id="40">
         <serialnumber>fesfes</serialnumber>
         <name>fsefse</name>
-        <author>seffes</author>
+        <authors>
+            <author>Adrian - 233</author>
+            <author>Minune - 233</author>
+        </authors>
         <price>30</price>
     </book>
     <book id="5">
         <serialnumber>awdwa</serialnumber>
         <name>dawda</name>
-        <author>safaff</author>
+        <authors>
+            <author>Me - 23</author>
+            <author>Myself - 133</author>
+            <author>And I - 11</author>
+        </authors>
         <price>67</price>
     </book>
-<book id="434"><serialnumber>efsfges</serialnumber><name>fesfesf</name><author>esfsef</author><price>50</price></book><book id="34"><serialnumber>efsfes</serialnumber><name>esfesf</name><author>esfes</author><price>30</price></book></BookXML>
+    <book id="434">
+        <serialnumber>efsfges</serialnumber>
+        <name>fesfesf</name>
+        <authors>
+            <author>a1 - 1134</author>
+            <author>a2 - 133</author>
+            <author>a3 - 9866</author>
+        </authors>
+        <price>50</price>
+    </book>
+    <book id="34">
+        <serialnumber>efsfes</serialnumber>
+        <name>esfesf</name>
+        <authors>
+            <author>a1 - 134</author>
+            <author>a2 - 726</author>
+            <author>a3 - 42876</author>
+        </authors>
+        <price>30</price>
+    </book>
+<book id="6"><serialnumber>4455</serialnumber><name>Bla</name><authors><author>cucu - 76</author><author>jja - 54</author><author>bb - 81</author></authors><price>98</price></book></BookXML>
